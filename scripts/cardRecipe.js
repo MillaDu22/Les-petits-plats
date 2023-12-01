@@ -1,5 +1,5 @@
 // Function fetch JSON data //
-const url  = "/data/data.json";
+const url  = "./data/data.json";
 const gallery =document.getElementById('gallery');
 const renderRecipes = () => {
     fetch(url)
