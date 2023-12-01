@@ -1,14 +1,104 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>Les petits plats</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
         <link rel="stylesheet" type="text/css" href="./css/style.css">
         <script src="https://kit.fontawesome.com/aa04c98466.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <header></header>
-        <main></main>
+        <header>
+            <img src="./assets/Images/lampos.png" class="bg-header" alt="fond de l'entête, plat cuisiné">
+            <h1>
+                <img src ="./assets/logos/Logo.png" class ="logo-header" alt="titre logo du site">
+            </h1>
+            <div class="form-group-search-bar">
+                <label for="search-bar" id="label-search-bar">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES</label>
+                <div class ="box-input-loop">
+                    <input type="text" class="form-control" id="search-bar" placeholder="Rechercher une recette, un ingrédient, ...">
+                    <img  src= "./assets/icons/Blackloop.png" class = "loop-search-bar">
+                </div>
+            </div>
+        </header>
+        <main>
+            <container class ="box-selects">
+                <div class="box-drop">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonIngredients" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ingrédients
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonIngredients">
+                        <div class="form-group">
+                            <label for="search-drop-ingredients"></label>
+                            <input type="text" class="form-control" id="search-drop-ingredients">
+                        </div>
+                        <ul class ="list-drop">
+                            <li class="dropdown-item" href="#">Jus de citron</li>
+                            <li class="dropdown-item" href="#">Glaçons</li>
+                            <li class="dropdown-item" href="#">Tomate</li>
+                            <li class="dropdown-item" href="#">Poulet</li>
+                            <li class="dropdown-item" href="#">Poivrons-rouge</li>
+                            <li class="dropdown-item" href="#">Thon en miettes</li>
+                            <li class="dropdown-item" href="#">oeufs</li>
+                        </ul>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonAppareils" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Appareils
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAppareils">
+                            <div class="form-group">
+                                <label for="search-drop-appareils"></label>
+                                <input type="text" class="form-control" id="search-drop-appareils">
+                            </div>
+                            <ul class ="list-drop">
+                            <li class="dropdown-item" href="#">Jus de citron</li>
+                            <li class="dropdown-item" href="#">Glaçons</li>
+                            <li class="dropdown-item" href="#">Tomate</li>
+                            <li class="dropdown-item" href="#">Poulet</li>
+                            <li class="dropdown-item" href="#">Poivrons-rouge</li>
+                            <li class="dropdown-item" href="#">Thon en miettes</li>
+                            <li class="dropdown-item" href="#">oeufs</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonUstensiles" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ustensiles
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonUstensiles">
+                            <div class="form-group">
+                                <label for="search-drop-ustensiles"></label>
+                                <input type="text" class="form-control" id="search-drop-ustensiles">
+                            </div>
+                            <ul class ="list-drop">
+                            <li class="dropdown-item" href="#">Jus de citron</li>
+                            <li class="dropdown-item" href="#">Glaçons</li>
+                            <li class="dropdown-item" href="#">Tomate</li>
+                            <li class="dropdown-item" href="#">Poulet</li>
+                            <li class="dropdown-item" href="#">Poivrons-rouge</li>
+                            <li class="dropdown-item" href="#">Thon en miettes</li>
+                            <li class="dropdown-item" href="#">oeufs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            <h2 class="title-main">1500 recettes</h2>
+        </container>
+        <span class="tag">
+            <p class="txt-tag">Lait de coco</p>
+            <a href="#" aria-label="supprimer le tag" class="x-tag" aria-hidden="true" tabindex="0">
+                <strong class ="fa-solid fa-xmark"></strong>
+            </a>
+        </span>
+        <container class ="gallery" id="gallery">
+        </container>
+        </main>
+        <!-- Bootstrap JS bundle -->
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
+    <script type="module" src="./scripts/cardRecipe.js"></script>
     </body>
 </html>

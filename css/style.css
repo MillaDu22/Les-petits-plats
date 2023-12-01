@@ -1,0 +1,307 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;0,9..40,1000;1,9..40,200;1,9..40,300;1,9..40,400;1,9..40,500;1,9..40,600;1,9..40,700;1,9..40,800;1,9..40,900;1,9..40,1000&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;0,9..40,1000;1,9..40,200;1,9..40,300;1,9..40,400;1,9..40,500;1,9..40,600;1,9..40,700;1,9..40,800;1,9..40,900;1,9..40,1000&family=Manrope:wght@200;300;400;500;600;700;800&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,900&display=swap');
+
+html {
+    Width:100%;
+    margin:0;
+    padding:0;
+}
+
+body {
+    width:100%;
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+header {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 667px;
+    width:100%;
+    margin:0 auto;
+    padding:0;
+    background: lightgrey;
+}
+
+.bg-header {
+    margin:0px;
+    width: 100%;
+    height: 667px;
+    object-fit: cover;
+}
+
+.logo-header {
+    width:207px;
+    height:25.26px;
+    position:absolute;
+    top:51px;
+    left:69px;
+    object-fit: cover;
+}
+.form-group-search-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width:70%;
+    position:absolute;
+}
+
+.box-input-loop {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width:100%;
+    z-index:1;
+}
+
+.loop-search-bar {
+    object-fit: cover;
+    position: absolute;
+    right:1.1%;
+    z-index:2;
+}
+#label-search-bar {
+    font-family:"Anton";
+    color:#FFD15B;
+    width:53%;
+    font-size: 2em;
+    text-align: center;
+}
+#search-bar {
+    font-family:"Manrope";
+    font-size:16px;
+    font-weight:400;
+    line-height:22;
+    display: flex;
+    height:72px;
+    width:100%;
+    padding-left:35px;
+    border-radius:11px;
+}
+main {
+    margin:0 auto;
+    padding-left:5%;
+    padding-right:5%;
+    display:flex;
+    flex-direction: column;
+    width:90%;
+    background: lightgrey ;
+}
+.box-selects {
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+}
+
+.box-drop {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width:70%;
+}
+.dropdown-toggle {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width:195px;
+    padding:17px 16px;
+    background: white;
+    color:black;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+
+.dropdown-toggle:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: relative;
+    margin-right:5%;
+    margin-top: 0px;
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: black transparent;
+}
+.dropdown-toggle.is-active {
+    border-radius: 5px 5px 0 0;
+    background-color: #901C1C;
+    box-shadow: none;
+    border-bottom: none;
+    color: white;
+    outline: none;
+}
+
+.dropdown-toggle.is-active:after {
+    border-color: black transparent;
+    transform: rotate(180deg);
+}
+
+.dropdown-toggle.is-active .dropdown-menu {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    max-height: 400px;
+}
+
+.dropdown-menu {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    max-height: 315px;
+}
+
+.form-group {
+    width:100%;
+}
+
+#search-drop-appareils, #search-drop-ingredients, #search-drop-ustensiles {
+    width:163px;
+    height: 36px;
+    width:95.5%;
+}
+
+.title-main {
+    font-family:"Anton";
+    font-size:1.5em;
+}
+.tag {
+    position:relative;
+    margin-top:20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-radius:10px;
+    background-color: #FFD15B;
+    padding:17px 18px 17px 18px;
+    width:203px;
+    height:53px;
+}
+.txt-tag {
+    font-family:"Manrope";
+    font-size:14px;
+    font-weight:400;
+    color:black;
+    line-height: 19px;
+}
+.fa-xmark {
+    color:black;
+    font-size:14px;
+}
+
+.gallery {
+    position: relative;
+    margin-top:40px;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.card {
+    background: white;
+    margin:0 0 40px 0;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    min-height:731px;
+    border-radius:21px;
+    box-shadow: 0 4 34 30 black;
+}
+.img-recipe {
+    width: 100%;
+    height:253px;
+    object-fit: cover;
+}
+.title-recipe {
+    margin:25px auto 0;
+    font-family: "Anton";
+    font-size:18px;
+    line-height:27.1px;
+    color:black;
+    width:85%;
+}
+.subtitle-recipe, .subtitle-ingredients {
+    width:85%;
+    margin:25px auto;
+}
+.description {
+    width:85%;
+    margin:0 auto;
+}
+.ingredients-list {
+    margin-left:-9px;
+    width:95%;
+    list-style: none;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    overflow: hidden;
+}
+.ingredient {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width:50%;
+}
+.subtitle-recipe, 
+.description, 
+.subtitle-ingredients, 
+.name-ingredient, 
+.quantity {
+    font-family:"Manrope";
+    font-weight: 400;
+    font-size: 14px;
+    color:black;
+}
+
+.quantity {
+    margin-top:-17px;
+}
+
+.name-ingredient {
+    font-weight: bold ;
+}
+@media screen and (max-width: 667px) {
+    header {
+        justify-content: center;
+        align-items: center;
+    }
+    h1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width:100%;
+    }
+    .logo-header {
+        width:50%;
+        margin-left:30px;
+    }
+    .box-selects {
+        flex-direction: column-reverse;
+    }
+    .box-drop {
+        flex-direction: column;
+    }
+    main {
+        justify-content: center;
+        align-items: center;
+        padding-left:2%;
+        padding-right: 2%;
+    }
+    #gallery {
+        margin-left:auto;
+        margin-right:auto;
+        width:96%;
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+    .card {
+        width:100%;
+    }
+}
