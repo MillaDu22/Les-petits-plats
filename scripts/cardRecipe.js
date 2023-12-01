@@ -7,7 +7,7 @@ const renderRecipes = () => {
         return response.json()
     })
     .then( function (data) {
-        console.log(data)
+        //console.log(data)
         if (Array.isArray(data)) {
             data.forEach(recipe => {
                 const ingredientsListHTML = recipe.ingredients.map(ingredient => `
@@ -35,3 +35,4 @@ const renderRecipes = () => {
     });
 }
 renderRecipes()
+
