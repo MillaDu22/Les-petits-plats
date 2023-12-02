@@ -18,7 +18,7 @@ const renderRecipes = () => {
                 `).join('');
             gallery.innerHTML +=`
             <figure class ="card">
-                <img src="./assets/Images/${recipe.image}" class="img-recipe" alt="${recipe.name}">
+                <img src="./assets/images/${recipe.image}" class="img-recipe" alt="${recipe.name}">
                 <h3 class="title-recipe">${recipe.name}</h3>
                 <h4 class=" subtitle-recipe">RECETTE</h4>
                 <p class="description">${recipe.description}</p>
