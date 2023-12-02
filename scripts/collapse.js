@@ -72,13 +72,12 @@ const createDropdown = (data, sectionId) => {
     const itemsArray = data.map(item => `<li class="dropdown-item" href="#">${item}</li>`);
     return `
     <div class="dropdown">
-        <a href="#" role="button" class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton-${sectionId}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a href="#" role="button" class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton-${sectionId}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Bouton${sectionId}">
             ${sectionId}
         </a>
-        <div class="dropdown-menu" aria-labelledby="Menu-déoulant-${sectionId}">
+        <div class="dropdown-menu" >
             <div class="form-group">
-                <label for="search-drop-${sectionId}"></label>
-                <input type="text" class="form-control" id="search-drop-${sectionId}">
+                <input type="text" class="form-control" id="search-drop-${sectionId}" aria-label="Champs de recherche">
             </div>
             <ul class="list-drop">
                 ${itemsArray.join('')}

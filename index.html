@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>Les petits plats</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="Les petits plats, le site de recettes gastronomiques">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="./css/style.css">
@@ -11,7 +12,7 @@
     </head>
     <body>
         <header>
-            <img src="./assets/Images/lampos.png" class="bg-header" alt="fond de l'entête, plat cuisiné">
+            <img src="./assets/Images/lampos.webp" class="bg-header" alt="fond de l'entête, plat cuisiné">
             <h1>
                 <img src ="./assets/logos/Logo.png" class ="logo-header" alt="titre logo du site">
             </h1>
@@ -19,23 +20,22 @@
                 <label for="search-bar" id="label-search-bar">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN, SIMPLES ET DÉLICIEUSES</label>
                 <div class ="box-input-loop">
                     <input type="text" class="form-control" id="search-bar" placeholder="Rechercher une recette, un ingrédient, ...">
-                    <img  src= "./assets/icons/Blackloop.png" class = "loop-search-bar">
+                    <img  src= "./assets/icons/Blackloop.png" class = "loop-search-bar" alt="icône loop du bouton recherche">
                 </div>
             </div>
         </header>
         <main>
-            <container class ="box-selects">
+            <section class ="box-selects">
                 <div class="box-drop" id="box-drop"></div>
                 <h2 class="title-main">1500 recettes</h2>
-            </container>
+            </section>
         <span class="tag">
-            <p class="txt-tag">Lait de coco</p>
-            <a href="#" aria-label="supprimer le tag" class="x-tag" aria-hidden="true" tabindex="0">
+            <span class="txt-tag">Lait de coco</span>
+            <a href="#" aria-label="supprimer le tag" class="x-tag" aria-hidden="false" tabindex="0">
                 <strong class ="fa-solid fa-xmark"></strong>
             </a>
         </span>
-        <container class ="gallery" id="gallery">
-        </container>
+        <div class ="gallery" id="gallery"></div>
         </main>
         <!-- Bootstrap JS bundle -->
         <!-- jQuery -->

@@ -67,7 +67,7 @@ header {
 }
 #label-search-bar {
     font-family:"Anton";
-    color:#FFD15B;
+    color:#867600;
     width:53%;
     font-size: 2em;
     text-align: center;
@@ -228,7 +228,7 @@ main {
     width: 32%;
     min-height:900px;
     border-radius:21px;
-    box-shadow: 0 4 34 30 black;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 .img-recipe {
     border-radius: 21px 21px 0px 0px;
