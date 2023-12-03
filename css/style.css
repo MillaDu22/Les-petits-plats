@@ -65,6 +65,7 @@ header {
     right:1.1%;
     z-index:2;
 }
+
 #label-search-bar {
     font-family:"Anton";
     color:#867600;
@@ -72,6 +73,7 @@ header {
     font-size: 2em;
     text-align: center;
 }
+
 #search-bar {
     font-family:"Manrope";
     font-size:16px;
@@ -83,6 +85,7 @@ header {
     padding-left:35px;
     border-radius:11px;
 }
+
 main {
     margin:0 auto;
     padding-left:5%;
@@ -92,6 +95,7 @@ main {
     width:100%;
     background: lightgrey ;
 }
+
 /************* drops *************/
 .box-selects {
     display:flex;
@@ -107,7 +111,6 @@ main {
     width:50%;
 }
 
-
 /* Bouton */
 .dropdown-toggle {
     display: flex;
@@ -122,21 +125,20 @@ main {
     border-radius: 11px;
     cursor: pointer;
     transition: all 0.3s ease-out;
+    text-decoration: none;
 }
+
 .dropdown-toggle:hover {
     background: white;
     color:black;
 } 
 
-/* Rotation de la flèche */
-.dropdown-toggle.collapsed::after {
-    transform: rotate(180deg);
-    content: '\25B8'; 
+.dropdown-toggle.collapsed::after, .fa-chevron-down {
     background: white;
 }
 
 .dropdown-toggle:not(.collapsed)::after {
-    transform: rotate(0deg);
+    display:none;
 }
 
 /* Flèche stylisée */
@@ -152,11 +154,11 @@ main {
     border-color: black transparent;
 }
 
+
 /* Menu déroulant */
 .dropdown-menu {
     margin-top:-11px;
     width:195px;
-    display: none;
     border-radius: 0px 0px 11px 11px;
     flex-direction: column;
     background-color: white;
@@ -165,18 +167,27 @@ main {
 
 /* Menu déroulant ouvert */
 .show .dropdown-menu {
-    display: flex;
+    position:relative;
     max-height: 290px;
-    overflow: scroll;
+    overflow: hidden;
+
 }
 
 .form-group label{
     display:none;
 }
+
 .form-control {
     margin:0 auto;
     width:90%;
 }
+
+.fa-magnifying-glass {
+    position: absolute;
+    top:18px;
+    left:85%;
+}
+
 .list-drop {
     margin-left:-50px;
 }
@@ -186,6 +197,7 @@ main {
     font-family:"Anton";
     font-size:1.5em;
 }
+
 .tag {
     position:relative;
     margin-top:20px;
@@ -198,6 +210,7 @@ main {
     width:203px;
     height:53px;
 }
+
 .txt-tag {
     font-family:"Manrope";
     font-size:14px;
@@ -205,6 +218,7 @@ main {
     color:black;
     line-height: 19px;
 }
+
 .fa-xmark {
     color:black;
     font-size:14px;
@@ -220,6 +234,7 @@ main {
     align-items: flex-start;
     flex-wrap: wrap;
 }
+
 .card {
     background: white;
     margin:0 0 40px 0;
@@ -230,12 +245,14 @@ main {
     border-radius:21px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+
 .img-recipe {
     border-radius: 21px 21px 0px 0px;
     width: 100%;
     height:253px;
     object-fit: cover;
 }
+
 .title-recipe {
     margin:25px auto 0;
     font-family: "Anton";
@@ -244,14 +261,17 @@ main {
     color:black;
     width:85%;
 }
+
 .subtitle-recipe, .subtitle-ingredients {
     width:85%;
     margin:25px auto;
 }
+
 .description {
     width:85%;
     margin:0 auto;
 }
+
 .ingredients-list {
     margin-left:-9px;
     width:95%;
@@ -262,12 +282,14 @@ main {
     justify-content: space-between;
     overflow: hidden;
 }
+
 .ingredient {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width:50%;
 }
+
 .subtitle-recipe, 
 .description, 
 .subtitle-ingredients, 
@@ -291,31 +313,38 @@ main {
         justify-content: center;
         align-items: center;
     }
+
     h1 {
         display: flex;
         justify-content: center;
         align-items: center;
         width:100%;
     }
+
     .logo-header {
         width:50%;
         margin-left:30px;
     }
+
     .box-selects {
         flex-direction: column-reverse;
     }
+
     .box-drop {
         flex-direction: column;
         width:360px;
     }
+
     .dropdown {
         position: relative;
         margin-bottom: 20px;
     }
+
     /* Bouton */
     .dropdown-toggle {
         width:360px;
     }
+
     /* Menu déroulant */
     .dropdown-menu {
         width:360px;
@@ -335,6 +364,7 @@ main {
         padding-left:2%;
         padding-right: 2%;
     }
+
     #gallery {
         margin-left:auto;
         margin-right:auto;
@@ -342,6 +372,7 @@ main {
         flex-direction: column;
         flex-wrap: nowrap;
     }
+    
     .card {
         width:100%;
     }

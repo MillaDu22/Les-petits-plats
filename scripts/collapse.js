@@ -1,16 +1,3 @@
-// Evènement button collapse //
-document.addEventListener('DOMContentLoaded', function () {
-    const dropdownButtons = document.querySelectorAll('.dropdown-toggle');
-    
-    dropdownButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            this.classList.toggle('collapsed');
-            const dropdownMenu = this.nextElementSibling;
-            dropdownMenu.classList.toggle('show');
-        });
-    });
-});
-
 
 // Function fetch JSON data //
 const collapseUrl = "./data/data.json";
@@ -74,10 +61,12 @@ const createDropdown = (data, sectionId) => {
     <div class="dropdown">
         <a href="#" role="button" class="nav-link dropdown-toggle" type="button" id="dropdownMenuButton-${sectionId}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Bouton${sectionId}">
             ${sectionId}
+            <strong class ="fa-solid fa-chevron-down"></strong>
         </a>
-        <div class="dropdown-menu" >
+        <div class="dropdown-menu">
             <div class="form-group">
                 <input type="text" class="form-control" id="search-drop-${sectionId}" aria-label="Champs de recherche">
+                <strong class="fa-solid fa-magnifying-glass"></strong>
             </div>
             <ul class="list-drop">
                 ${itemsArray.join('')}
@@ -86,6 +75,11 @@ const createDropdown = (data, sectionId) => {
     </div>`;
 };
 renderCollapse();
+
+
+
+
+
 
 
 
