@@ -32,8 +32,7 @@ const filterRecipes = (search) => {
         const descriptionLower = recipe.description.toLowerCase();
         const ingredientsLower = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase()).join(' ');
 
-        return recipeNameLower.includes(searchLower) || ingredientsLower.includes(searchLower) || descriptionLower.includes(searchLower)
-;
+        return recipeNameLower.includes(searchLower) || ingredientsLower.includes(searchLower) || descriptionLower.includes(searchLower);
     });
     renderRecipes(filteredRecipes);
 };

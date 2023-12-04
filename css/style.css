@@ -168,7 +168,7 @@ main {
 /* Menu déroulant ouvert */
 .show .dropdown-menu {
     position:relative;
-    max-height: 290px;
+    max-height: 340px;
     overflow: hidden;
 
 }
@@ -190,8 +190,30 @@ main {
 
 .list-drop {
     margin-left:-50px;
+    font-size:14px;
+    font-weight:400;
+    color:black;
 }
 
+.tag-list {
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFD15B;
+    line-height: 37px;
+    font-size:14px;
+    font-weight:400;
+    color:black;
+    text-align: left;
+    margin-left:-10px;
+    margin-bottom: 20px;
+    width:105%;
+    padding-left:25px;
+}
+.remove {
+    display:none;
+}
 /************* tags **************/
 .title-main {
     font-family:"Anton";
@@ -201,22 +223,34 @@ main {
 .tag {
     position:relative;
     margin-top:20px;
+    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-radius:10px;
+    min-height:53px;
+    width:100%;
+    list-style: none;
+}
+
+
+.txt-tag {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    border-radius:10px;
+    align-items: center;
     background-color: #FFD15B;
     padding:17px 18px 17px 18px;
-    width:203px;
-    height:53px;
-}
-
-.txt-tag {
+    border-radius:10px;
     font-family:"Manrope";
     font-size:14px;
     font-weight:400;
     color:black;
     line-height: 19px;
+    width:203px;
+    height:53px;
+    margin-top: 2%;
+    margin-left: -5%;
+    margin-right: 6.8%;
 }
 
 .fa-xmark {
