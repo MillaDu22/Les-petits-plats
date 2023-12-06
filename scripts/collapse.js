@@ -37,17 +37,18 @@ const getAllIngredients = (data) => {
     return Array.from(itemsSet);
 };
 // Obtention lists Ustensils et Appareils //
-const getAllValues = (data, key) => {
+const getAllValues = (data, type) => {
     const itemsSet = new Set();
     data.forEach(item => {
-        if (Array.isArray(item[key])) {
-            item[key].forEach(value => itemsSet.add(value));
-        } else if (typeof item[key] === 'string') {
-            itemsSet.add(item[key]);
+        if (Array.isArray(item[type])) {
+            item[type].forEach(value => itemsSet.add(value));
+        } else if (typeof item[type] === 'string') {
+            itemsSet.add(item[type]);
         }
     });
     return Array.from(itemsSet);
 };
+
 
 // Data listes des collapses par id //
 const renderSection = (sectionId, sectionData) => {
@@ -56,7 +57,7 @@ const renderSection = (sectionId, sectionData) => {
 };
 
 
-// Fonction pour gérer le clic sur un élément li de la liste de chaque collapse affichage des tags//
+// Fonction pour gérer le clic sur un élément li de la liste de chaque collapse affichage des tags //
 const handleItemClick = (item, sectionId) => {
     const tagList = document.getElementById(`tag-list-${sectionId}`); // Met à jour le tagList interieur collapse //
     tagList.innerHTML = `${item}<img src="./assets/icons/XCloseItem.png" class="x-selection" id="x-selection-${sectionId}" alt="Croix de fermeture selection">`;
@@ -68,16 +69,29 @@ const handleItemClick = (item, sectionId) => {
     xLi.addEventListener('click', () => {    
         tagList.style.display = item ? 'none' : 'flex';
     });
-};
 
+    // Filtre les recettes en fonction des tags sélectionnés //
+    const selectedTags = document.querySelectorAll('.filterable-tag');
+    const selectedTagValues = Array.from(selectedTags).map(tag => tag.innerText.toLowerCase());
+
+    const filteredRecipes = allRecipes.filter(recipe => {
+        const recipeTags = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
+        /*recipeTags = recipe.appareils.map(appareil => appareil.appareil.toLowerCase())
+        recipeTags = recipe.ustensils.mao(ustensil => ustensil.ustensil.toLowerCase())*/
+        return selectedTagValues.every(tag => recipeTags.includes(tag));
+    });
+    // Affiche les recettes filtrées //
+    renderRecipes(filteredRecipes);
+};
 
 // Fonction pour ajouter un nouveau txtTag hors du collapse //
 const addNewTxtTag = (item) => {
-    const txtTagContainer = document.querySelector('.tag'); // Mettez à jour le sélecteur //
+    const txtTagContainer = document.querySelector('.tag'); 
 
     // Création nouvel élément txtTag //
     const newTxtTag = document.createElement('li');
     newTxtTag.className = 'txt-tag';
+
     newTxtTag.innerHTML = `${item}<strong class ="fa-solid fa-xmark"></strong>`;
 
     // Ajout du nouvel élément txtTag au conteneur ul //
@@ -92,8 +106,32 @@ const addNewTxtTag = (item) => {
     });
 };
 
+
+
+
+
+
+
+
+
+
+// Filtrage input collapse //
+const filterDropdown = (sectionId) => {
+    const searchInput = document.getElementById(`search-drop-${sectionId}`);
+    const listItems = document.querySelectorAll(`#dropdownMenuButton-${sectionId} + .dropdown-menu .list-drop .filterable-item`);
+
+    const searchTerm = searchInput.value.toLowerCase();
+
+    listItems.forEach(item => {
+        const itemText = item.innerText.toLowerCase();
+        const isVisible = itemText.includes(searchTerm);
+        item.style.display = isVisible ? 'block' : 'none';
+    });
+};
+
+// Les éléments collapses //
 const createDropdown = (data, sectionId) => {
-    const itemsArray = data.map(item => `<li class="dropdown-item" href="#" id="item-${sectionId}-${item}" data-item="${item}" onclick="handleItemClick('${item}', '${sectionId}')">${item}</li>`);
+    const itemsArray = data.map(item => `<li class="dropdown-item filterable-item" href="#" id="item-${sectionId}-${item}" data-item="${item}" onclick="handleItemClick('${item}', '${sectionId}')">${item}</li>`);
     console.log(itemsArray)
     return `
     <div class="dropdown">
@@ -103,10 +141,10 @@ const createDropdown = (data, sectionId) => {
         </a>
         <div class="dropdown-menu">
             <div class="form-group">
-                <input type="text" class="form-control" id="search-drop-${sectionId}" aria-label="Champs de recherche">
+                <input type="text" class="form-control" id="search-drop-${sectionId}" aria-label="Champs de recherche" oninput="filterDropdown('${sectionId}')">
                 <strong class="fa-solid fa-magnifying-glass"></strong>
             </div>
-            <span class="dropdown-item tag-list" id="tag-list-${sectionId}" href="#">Lait de coco<img src="./assets/icons/XCloseItem.png" class  "x-selection" alt ="Croix de fermeture selection"></span>
+            <span class="dropdown-item tag-list filterable-tag" id="tag-list-${sectionId}" href="#">Lait de coco<img src="./assets/icons/XCloseItem.png"  alt ="Croix de fermeture selection"></span>
             <ul class="list-drop" data-section-data='${JSON.stringify(data)}'>
                 ${itemsArray.join('')}
             </ul>
@@ -114,8 +152,10 @@ const createDropdown = (data, sectionId) => {
     </div>`;
 };
 
-// rendu initial //
+// rendu initial avec listes complètes //
 renderCollapse();
+
+
 
 
 
