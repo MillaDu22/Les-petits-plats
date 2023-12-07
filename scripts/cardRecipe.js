@@ -34,13 +34,15 @@ const filterRecipes = (search) => {
 
         return recipeNameLower.includes(searchLower) || ingredientsLower.includes(searchLower) || descriptionLower.includes(searchLower);
     });
-    renderRecipes(filteredRecipes);
+    return filteredRecipes
+
 };
 
 const searchInput = document.getElementById('search-bar');
 searchInput.addEventListener('input', function () {
     const search = this.value.trim();
-    filterRecipes(search);
+    const filteredRecipes = filterRecipes(search);
+    renderRecipes(filteredRecipes)
 });
 
 // Chargement de toutes les recettes au démarrage //

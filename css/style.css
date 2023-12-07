@@ -96,28 +96,39 @@ main {
     background: lightgrey ;
 }
 
-/************* drops *************/
+
+/************** Collapses **************/
 .box-selects {
+    margin-top:10px;
     display:flex;
     flex-direction:row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .box-drop {
     display:flex;
     flex-direction: row;
     justify-content: space-between;
-    width:50%;
+    width:75%;
+}
+.dropdown{
+    position:relative;
+    display:flex;
+    flex-direction: column;
+    width: 30.7%;
+    flex-wrap: wrap;
 }
 
+
 /* Bouton */
-.dropdown-toggle {
+.btn-primary{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 195px;
+    width: 100%;
+    min-width: 156px;
     padding: 17px 16px;
     background: white;
     color: black;
@@ -126,47 +137,47 @@ main {
     cursor: pointer;
     transition: all 0.3s ease-out;
     text-decoration: none;
+    border:none;
 }
 
-.dropdown-toggle:hover {
+.btn-primary:hover, .btm-primary:active {
     background: white;
     color:black;
+    border-radius: 11px 11px 0px 0px;
 } 
 
-.dropdown-toggle.collapsed::after, .fa-chevron-down {
+.collapse.show::after{
     background: white;
 }
 
-.dropdown-toggle:not(.collapsed)::after {
-    display:none;
+.fa-chevron-down  {
+    color:black;
 }
 
 /* Flèche stylisée */
-.dropdown-toggle::after {
-    content: "";
-    width: 0%;
-    height: 0;
-    position: relative;
-    margin-right: 5%;
-    margin-top: 0px;
-    border-width: 6px 6px 0 6px;
-    border-style: solid;
-    border-color: black transparent;
+.btn-primary::after {
+    display:none;
 }
 
-
 /* Menu déroulant */
-.dropdown-menu {
-    margin-top:-11px;
-    width:195px;
+.collapse{
+    display: flex;
+    position:relative;
+    margin-top:51px;
+    margin-left:-34.6%;
+    width:30.7%;
+    min-width: 156px;
+    max-height: 340px;
     border-radius: 0px 0px 11px 11px;
     flex-direction: column;
     background-color: white;
     border:none;
+    overflow: hidden;
 }
 
+
 /* Menu déroulant ouvert */
-.show .dropdown-menu {
+.collapse.show {
     position:relative;
     max-height: 340px;
     overflow: hidden;
@@ -189,7 +200,7 @@ main {
 }
 
 .list-drop {
-    margin-left:-50px;
+    margin-left:-37px;
     font-size:14px;
     font-weight:400;
     color:black;
@@ -206,20 +217,36 @@ main {
     font-weight:400;
     color:black;
     text-align: left;
+    margin-top:10px;
     margin-left:-10px;
     margin-bottom: 20px;
     width:105%;
     padding-left:25px;
 }
-.remove {
-    display:none;
-}
+
 /************* tags **************/
 .title-main {
     font-family:"Anton";
     font-size:1.5em;
 }
-
+.container-tag-ingredients {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width:75%;
+    overflow: hidden;
+}
+#ulTagIngredients, #ulTagAppliances, #ulTagUstensils {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    margin-left:-20px;
+    margin-right:20px;
+    width:34%;
+}
 .tag {
     position:relative;
     margin-top:20px;
@@ -228,7 +255,7 @@ main {
     flex-wrap: wrap;
     border-radius:10px;
     min-height:53px;
-    width:100%;
+    width:30.7%;
     list-style: none;
 }
 
@@ -362,35 +389,54 @@ main {
 
     .box-selects {
         flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+        width:100%;
     }
-
+    /************** Collapses **************/
     .box-drop {
         flex-direction: column;
-        width:360px;
+        width:90%;
     }
 
     .dropdown {
         position: relative;
         margin-bottom: 20px;
+        margin-top: 20px;
+        width:100%;
     }
 
     /* Bouton */
-    .dropdown-toggle {
-        width:360px;
+    .btn-primary{
+        width: 100%;
     }
 
     /* Menu déroulant */
-    .dropdown-menu {
-        width:360px;
-        margin-top: -7px;
-    }
-    
-    /* Menu déroulant ouvert */
-    .show .dropdown-menu {
+    .collapse{
         display: flex;
-        max-height: 290px;
+        position:relative;
+        margin-top:-30px;
+        margin-left:0px;
+        width:100%;
+        max-height: 340px;
+        border-radius: 0px 0px 11px 11px;
+        flex-direction: column;
+        background-color: white;
+        border:none;
         overflow: hidden;
     }
+
+    .form-control {
+        width:100%;
+    }
+
+    .fa-magnifying-glass {
+        position: absolute;
+        top:18px;
+        left:93%;
+    }
+
+
     
     main {
         justify-content: center;

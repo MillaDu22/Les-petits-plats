@@ -1,0 +1,22 @@
+{
+  "name": "les-petits-plats",
+  "version": "1.0.0",
+  "description": "site de recettes de cuisine",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MillaDu22/Les-petits-plats.git"
+  },
+  "author": "Ludmilla Marti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MillaDu22/Les-petits-plats/issues"
+  },
+  "homepage": "https://github.com/MillaDu22/Les-petits-plats#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.0"
+  }
+}
