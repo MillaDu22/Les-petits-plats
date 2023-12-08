@@ -74,15 +74,20 @@ const handleItemClick = (item, sectionId) => {
     const selectedTags = document.querySelectorAll('.filterable-tag');
     const selectedTagValues = Array.from(selectedTags).map(tag => tag.innerText.toLowerCase());
 
-    const filteredRecipes = allRecipes.filter(recipe => {
-        const recipeTags = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
-        /*recipeTags = recipe.appareils.map(appareil => appareil.appareil.toLowerCase())
-        recipeTags = recipe.ustensils.mao(ustensil => ustensil.ustensil.toLowerCase())*/
-        return selectedTagValues.every(tag => recipeTags.includes(tag));
+    // Applique le deuxième niveau de filtrage directement sur filteredRecipes //
+    const doublyFilteredRecipes = filteredRecipes.filter(recipe => {
+        const ingredientTags = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
+        const applianceTags = recipe.appliance.toLowerCase();
+        const ustensilTags = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
+
+        return selectedTagValues.some(tag => ingredientTags.includes(tag)) ||
+                selectedTagValues.includes(applianceTags) || // bien filtrées ??//
+                selectedTagValues.some(tag => ustensilTags.includes(tag));  // bien filtrées ??//
     });
-    // Affiche les recettes filtrées //
-    renderRecipes(filteredRecipes);
+    // Affiche les recettes filtrées après les deux niveaux de filtrage //
+    renderRecipes(doublyFilteredRecipes);
 };
+
 
 // Fonction pour ajouter un nouveau txtTag dans le conteneur approprié //
 const addNewTxtTag = (item, tagType) => {
@@ -180,16 +185,6 @@ const createDropdown = (data, sectionId) => {
 };
 // rendu initial avec listes complètes //
 renderCollapse();
-
-
-
-
-
-
-
-
-
-
 
 
 

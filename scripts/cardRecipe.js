@@ -1,3 +1,4 @@
+
 const url = "./data/data.json";
 const gallery = document.getElementById('gallery');
 let allRecipes = [];
@@ -24,9 +25,10 @@ const renderRecipes = (recipes) => {
     });
 };
 
+let filteredRecipes = [];
 const filterRecipes = (search) => {
     const searchLower = search.toLowerCase();
-    const filteredRecipes = allRecipes.filter(recipe => {
+    filteredRecipes = allRecipes.filter(recipe => {
         // Recherche dans le nom de la recette et les ingrédients //
         const recipeNameLower = recipe.name.toLowerCase();
         const descriptionLower = recipe.description.toLowerCase();
@@ -35,8 +37,9 @@ const filterRecipes = (search) => {
         return recipeNameLower.includes(searchLower) || ingredientsLower.includes(searchLower) || descriptionLower.includes(searchLower);
     });
     return filteredRecipes
-
 };
+
+
 
 const searchInput = document.getElementById('search-bar');
 searchInput.addEventListener('input', function () {
@@ -59,7 +62,6 @@ fetch(url)
 .catch(error => {
     console.error('Error fetching recipes:', error);
 });
-
 
 
 
