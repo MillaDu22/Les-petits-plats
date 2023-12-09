@@ -25,21 +25,30 @@ const renderRecipes = (recipes) => {
     });
 };
 
+// Cette version utilise une boucle for pour itérer sur la liste des recettes et une autre boucle for imbriquée pour traiter les ingrédients. //
+
 let filteredRecipes = [];
+
 const filterRecipes = (search) => {
     const searchLower = search.toLowerCase();
-    filteredRecipes = allRecipes.filter(recipe => {
-        // Recherche dans le nom de la recette et les ingrédients //
+    filteredRecipes = [];
+
+    for (let i = 0; i < allRecipes.length; i++) {
+        const recipe = allRecipes[i];
         const recipeNameLower = recipe.name.toLowerCase();
         const descriptionLower = recipe.description.toLowerCase();
-        const ingredientsLower = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase()).join(' ');
 
-        return recipeNameLower.includes(searchLower) || ingredientsLower.includes(searchLower) || descriptionLower.includes(searchLower);
-    });
-    return filteredRecipes
+        let ingredientsLower = "";
+        for (let j = 0; j < recipe.ingredients.length; j++) {
+            ingredientsLower += recipe.ingredients[j].ingredient.toLowerCase() + ' ';
+        }
+
+        if (recipeNameLower.includes(searchLower) || ingredientsLower.includes(searchLower) || descriptionLower.includes(searchLower)) {
+            filteredRecipes.push(recipe);
+        }
+    }
+    return filteredRecipes;
 };
-
-
 
 const searchInput = document.getElementById('search-bar');
 searchInput.addEventListener('input', function () {
