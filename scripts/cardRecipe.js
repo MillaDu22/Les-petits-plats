@@ -3,15 +3,27 @@ const url = "./data/data.json";
 const gallery = document.getElementById('gallery');
 let allRecipes = [];
 
+
+
+// Version équivalente a forEach //
+// Cette version utilise une boucle for pour itérer sur les recettes et une autre boucle for imbriquée pour traiter les ingrédients //
 const renderRecipes = (recipes) => {
-    gallery.innerHTML = "";  // retrait contenu //
-    recipes.forEach(recipe => {
-        const ingredientsListHTML = recipe.ingredients.map(ingredient => `
-            <li class="ingredient">
-                <p class="name-ingredient">${ingredient.ingredient}</p>
-                <p class="quantity">${ingredient.quantity}${ingredient.unit ? ingredient.unit : ''}</p>
-            </li>
-        `).join('');
+    gallery.innerHTML = "";  // Effacement du contenu précédent //
+
+    for (let i = 0; i < recipes.length; i++) {
+        const recipe = recipes[i];
+        const ingredientsListHTML = [];
+
+        for (let j = 0; j < recipe.ingredients.length; j++) {
+            const ingredient = recipe.ingredients[j];
+            ingredientsListHTML.push(`
+                <li class="ingredient">
+                    <p class="name-ingredient">${ingredient.ingredient}</p>
+                    <p class="quantity">${ingredient.quantity}${ingredient.unit ? ingredient.unit : ''}</p>
+                </li>
+            `);
+        }
+
         gallery.innerHTML += `
             <figure class="card">
                 <img src="./assets/images/${recipe.image}" class="img-recipe" alt="${recipe.name}">
@@ -19,11 +31,12 @@ const renderRecipes = (recipes) => {
                 <h4 class="subtitle-recipe">RECETTE</h4>
                 <p class="description">${recipe.description}</p>
                 <h5 class="subtitle-ingredients">INGREDIENTS</h5>
-                <ul class="ingredients-list">${ingredientsListHTML}</ul>
+                <ul class="ingredients-list">${ingredientsListHTML.join('')}</ul>
             </figure>
         `;
-    });
+    }
 };
+
 
 // Cette version utilise une boucle for pour itérer sur la liste des recettes et une autre boucle for imbriquée pour traiter les ingrédients. //
 
