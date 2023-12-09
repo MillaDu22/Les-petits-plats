@@ -27,25 +27,35 @@ const renderCollapse = () => {
 // Obtention list ingrédients //
 const getAllIngredients = (data) => {
     const itemsSet = new Set();
-    data.forEach(item => {
+
+    for (let i = 0; i < data.length; i++) {
+        const item = data[i];
         if (Array.isArray(item.ingredients)) {
-            item.ingredients.forEach(ingredient => {
+            for (let j = 0; j < item.ingredients.length; j++) {
+                const ingredient = item.ingredients[j];
                 itemsSet.add(ingredient.ingredient);
-            });
+            }
         }
-    });
+    }
+
     return Array.from(itemsSet);
 };
+
 // Obtention lists Ustensils et Appareils //
 const getAllValues = (data, type) => {
     const itemsSet = new Set();
-    data.forEach(item => {
+
+    for (let i = 0; i < data.length; i++) {
+        const item = data[i];
         if (Array.isArray(item[type])) {
-            item[type].forEach(value => itemsSet.add(value));
+            for (let j = 0; j < item[type].length; j++) {
+                const value = item[type][j];
+                itemsSet.add(value);
+            }
         } else if (typeof item[type] === 'string') {
             itemsSet.add(item[type]);
         }
-    });
+    }
     return Array.from(itemsSet);
 };
 
@@ -59,34 +69,50 @@ const renderSection = (sectionId, sectionData) => {
 
 // Fonction pour gérer le clic sur un élément li de la liste de chaque collapse affichage des tags //
 const handleItemClick = (item, sectionId) => {
-    const tagList = document.getElementById(`tag-list-${sectionId}`); // Met à jour le tagList interieur collapse //
+    const tagList = document.getElementById(`tag-list-${sectionId}`);
     tagList.innerHTML = `${item}<img src="./assets/icons/XCloseItem.png" class="x-selection" id="x-selection-${sectionId}" alt="Croix de fermeture selection">`;
-    tagList.style.display = item ? 'flex' : 'none'; // Affiche le tagList //
-    // Appel fonction nouveau txtTag hors collapse pour chaque élément liste sélectionné dans son container aproprié //
+    tagList.style.display = item ? 'flex' : 'none';
+
     addNewTxtTag(item, sectionId);
-    // Pour disparition tagList interieur collapse, click X //
+
     const xLi = document.getElementById(`x-selection-${sectionId}`);
-    xLi.addEventListener('click', () => {    
+    xLi.addEventListener('click', () => {
         tagList.style.display = item ? 'none' : 'flex';
     });
 
-    // Filtre les recettes en fonction des tags sélectionnés //
     const selectedTags = document.querySelectorAll('.filterable-tag');
-    const selectedTagValues = Array.from(selectedTags).map(tag => tag.innerText.toLowerCase());
+    const selectedTagValues = [];
 
-    // Applique le deuxième niveau de filtrage directement sur filteredRecipes //
-    const doublyFilteredRecipes = filteredRecipes.filter(recipe => {
-        const ingredientTags = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
+    for (let i = 0; i < selectedTags.length; i++) {
+        const tag = selectedTags[i];
+        selectedTagValues.push(tag.innerText.toLowerCase());
+    }
+
+    const doublyFilteredRecipes = [];
+    for (let i = 0; i < filteredRecipes.length; i++) {
+        const recipe = filteredRecipes[i];
+        const ingredientTags = [];
+        for (let j = 0; j < recipe.ingredients.length; j++) {
+            const ingredient = recipe.ingredients[j];
+            ingredientTags.push(ingredient.ingredient.toLowerCase());
+        }
         const applianceTags = recipe.appliance.toLowerCase();
-        const ustensilTags = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
+        const ustensilTags = [];
+        for (let j = 0; j < recipe.ustensils.length; j++) {
+            const ustensil = recipe.ustensils[j];
+            ustensilTags.push(ustensil.toLowerCase());
+        }
 
-        return selectedTagValues.some(tag => ingredientTags.includes(tag)) ||
-                selectedTagValues.includes(applianceTags) || // bien filtrées ??//
-                selectedTagValues.some(tag => ustensilTags.includes(tag));  // bien filtrées ??//
-    });
-    // Affiche les recettes filtrées après les deux niveaux de filtrage //
+        if (selectedTagValues.some(tag => ingredientTags.includes(tag)) ||
+            selectedTagValues.includes(applianceTags) ||
+            selectedTagValues.some(tag => ustensilTags.includes(tag))) {
+            doublyFilteredRecipes.push(recipe);
+        }
+    }
     renderRecipes(doublyFilteredRecipes);
 };
+
+
 
 
 // Fonction pour ajouter un nouveau txtTag dans le conteneur approprié //
@@ -94,14 +120,21 @@ const addNewTxtTag = (item, tagType) => {
     // Sélection du conteneur approprié en fonction du type de tag //
     let tagContainer;
 
-    if (tagType === 'Ingredients') {
-        tagContainer = document.getElementById('ulTagIngredients');
-    } else if (tagType === 'Appareils') {
-        tagContainer = document.getElementById('ulTagAppliances');
-    } else if (tagType === 'Ustensiles') {
-        tagContainer = document.getElementById('ulTagUstensils');
-    } else {
-        // Gérer le cas où le type de tag n'est pas reconnu
+    // Utilisation d'une boucle for pour éviter une répétition de code //
+    const tagContainerIds = {
+        'Ingredients': 'ulTagIngredients',
+        'Appareils': 'ulTagAppliances',
+        'Ustensiles': 'ulTagUstensils',
+    };
+
+    for (const type in tagContainerIds) {
+        if (tagContainerIds.hasOwnProperty(type) && type === tagType) {
+            tagContainer = document.getElementById(tagContainerIds[type]);
+            break;
+        }
+    }
+
+    if (!tagContainer) {
         console.error('Type de tag non reconnu');
         return;
     }
@@ -132,23 +165,27 @@ const filterDropdown = (sectionId) => {
 
     const searchTerm = searchInput.value.toLowerCase();
 
-    listItems.forEach(item => {
+    for (let i = 0; i < listItems.length; i++) {
+        const item = listItems[i];
         const itemText = item.innerText.toLowerCase();
         const isVisible = itemText.includes(searchTerm);
         item.style.display = isVisible ? 'block' : 'none';
-    });
+    }
 };
+
 
 // Les éléments collapses //
 const createDropdown = (data, sectionId) => {
     // Fonction pour ouvrir un collapse spécifique //
     function openCollapse(sectionId) {
-        // Fermer tous les autres collapses
+        // Fermer tous les autres collapses //
         const allCollapseElements = document.querySelectorAll('.collapse');
-        allCollapseElements.forEach(collapseElement => {
+        for (let i = 0; i < allCollapseElements.length; i++) {
+            const collapseElement = allCollapseElements[i];
             const bsCollapse = new bootstrap.Collapse(collapseElement);
             bsCollapse.hide();
-        });
+        }
+
 
         // Ouvrir le collapse spécifique //
         const specificCollapseElement = document.getElementById(`collapseExemple-${sectionId}`);
@@ -157,32 +194,40 @@ const createDropdown = (data, sectionId) => {
     }
 
     // Ajout événement pour chaque bouton //
-    document.querySelectorAll('.btn-primary').forEach(button => {
+    const buttons = document.querySelectorAll('.btn-primary');
+    for (let i = 0; i < buttons.length; i++) {
+        const button = buttons[i];
         button.addEventListener('click', () => {
             const sectionId = button.getAttribute('data-section-id');
             openCollapse(sectionId);
         });
-    });
+    }
 
-    const itemsArray = data.map(item => `<li class="dropdown-item filterable-item" href="#" id="item-${sectionId}-${item}" data-item="${item}" onclick="handleItemClick('${item}', '${sectionId}')">${item}</li>`);
+    const itemsArray = [];
+    for (let i = 0; i < data.length; i++) {
+        const item = data[i];
+        const listItem = `<li class="dropdown-item filterable-item" href="#" id="item-${sectionId}-${item}" data-item="${item}" onclick="handleItemClick('${item}', '${sectionId}')">${item}</li>`;
+        itemsArray.push(listItem);
+    }
+    
     return `
-    <p class="dropdown">
-        <button class="btn btn-primary" type="button id="dropdownMenuButton-${sectionId}" data-bs-toggle="collapse" href="#collapseExemple-${sectionId}" role="button" aria-expanded="false" aria-controls="collapseExample"  aria-label="Bouton${sectionId}">
-            ${sectionId}
-            <strong class ="fa-solid fa-chevron-down"></strong>
-        </button>
-    </p>
-    <div class="dropdown-menu collapse" id="collapseExemple-${sectionId}">
-        <div class="form-group">
-            <input type="text" class="form-control" id="search-drop-${sectionId}" aria-label="Champs de recherche" oninput="filterDropdown('${sectionId}')">
-            <strong class="fa-solid fa-magnifying-glass"></strong>
-        </div>
-        <span class="dropdown-item tag-list filterable-tag" id="tag-list-${sectionId}" href="#"><img src="./assets/icons/XCloseItem.png"  alt ="Croix de fermeture selection"></span>
-        <ul class="list-drop" data-section-data='${JSON.stringify(data)}'>
-            ${itemsArray.join('')}
-        </ul>
-    </div>`;
-};
+        <p class="dropdown">
+            <button class="btn btn-primary" type="button id="dropdownMenuButton-${sectionId}" data-bs-toggle="collapse" href="#collapseExemple-${sectionId}" role="button" aria-expanded="false" aria-controls="collapseExample"  aria-label="Bouton${sectionId}">
+                ${sectionId}
+                <strong class ="fa-solid fa-chevron-down"></strong>
+            </button>
+        </p>
+        <div class="dropdown-menu collapse" id="collapseExemple-${sectionId}">
+            <div class="form-group">
+                <input type="text" class="form-control" id="search-drop-${sectionId}" aria-label="Champs de recherche" oninput="filterDropdown('${sectionId}')">
+                <strong class="fa-solid fa-magnifying-glass"></strong>
+            </div>
+            <span class="dropdown-item tag-list filterable-tag" id="tag-list-${sectionId}" href="#"><img src="./assets/icons/XCloseItem.png"  alt ="Croix de fermeture selection"></span>
+            <ul class="list-drop" data-section-data='${JSON.stringify(data)}'>
+                ${itemsArray.join('')}
+            </ul>
+        </div>`;
+    };
 // rendu initial avec listes complètes //
 renderCollapse();
 
