@@ -56,37 +56,53 @@ const renderSection = (sectionId, sectionData) => {
     collapseContainer.innerHTML += dropdownHTML;
 };
 
-
 // Fonction pour gérer le clic sur un élément li de la liste de chaque collapse affichage des tags //
-const handleItemClick = (item, sectionId) => {
+const listCollapseClick = (item, sectionId) => {
     const tagList = document.getElementById(`tag-list-${sectionId}`); // Met à jour le tagList interieur collapse //
     tagList.innerHTML = `${item}<img src="./assets/icons/XCloseItem.png" class="x-selection" id="x-selection-${sectionId}" alt="Croix de fermeture selection">`;
-    tagList.style.display = item ? 'flex' : 'none'; // Affiche le tagList //
+    tagList.style.display = 'flex'; // Affiche le tagList //
     // Appel fonction nouveau txtTag hors collapse pour chaque élément liste sélectionné dans son container aproprié //
     addNewTxtTag(item, sectionId);
+
     // Pour disparition tagList interieur collapse, click X //
     const xLi = document.getElementById(`x-selection-${sectionId}`);
     xLi.addEventListener('click', () => {    
-        tagList.style.display = item ? 'none' : 'flex';
+        tagList.style.display ='none';
+        renderRecipes(filteredRecipes);
     });
 
-    // Filtre les recettes en fonction des tags sélectionnés //
-    const selectedTags = document.querySelectorAll('.filterable-tag');
-    const selectedTagValues = Array.from(selectedTags).map(tag => tag.innerText.toLowerCase());
-
+    // Creation tableau après premier filtrage //
+    const originalRecipes = [...filteredRecipes];
+     // Filtre les recettes en fonction des tags sélectionnés //
+    const allSelectedTags = document.querySelectorAll('.filterable-tag');
+    const allSelectedTagValues = Array.from(allSelectedTags).map(tag => tag.innerText.toLowerCase());
+    // Création copie de la liste complète des recettes déja filtrée //
+    const currentRecipes = [...originalRecipes];
     // Applique le deuxième niveau de filtrage directement sur filteredRecipes //
-    const doublyFilteredRecipes = filteredRecipes.filter(recipe => {
-        const ingredientTags = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
-        const applianceTags = recipe.appliance.toLowerCase();
-        const ustensilTags = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
+    const doublyFilteredRecipes = currentRecipes.filter(recipe => {
+        // Déclaration des tableaux de base //
+        const ingredientTags = [];
+        const applianceTags = [];
+        const ustensilTags = [];
 
-        return selectedTagValues.some(tag => ingredientTags.includes(tag)) ||
-                selectedTagValues.includes(applianceTags) || // bien filtrées ??//
-                selectedTagValues.some(tag => ustensilTags.includes(tag));  // bien filtrées ??//
+        // Remplissage des tableaux avec les valeurs correspondantes //
+        recipe.ingredients.forEach(ingredient => {
+            ingredientTags.push(ingredient.ingredient.toLowerCase());
+        });
+        applianceTags.push(recipe.appliance.toLowerCase());
+        recipe.ustensils.forEach(ustensil => {
+            ustensilTags.push(ustensil.toLowerCase());
+        });
+
+        // Logique de filtrage //
+        return allSelectedTagValues.some(tag => ingredientTags.includes(tag)) ||
+            allSelectedTagValues.includes(applianceTags) ||
+            allSelectedTagValues.some(tag => ustensilTags.includes(tag));
     });
     // Affiche les recettes filtrées après les deux niveaux de filtrage //
     renderRecipes(doublyFilteredRecipes);
 };
+
 
 
 // Fonction pour ajouter un nouveau txtTag dans le conteneur approprié //
@@ -106,6 +122,8 @@ const addNewTxtTag = (item, tagType) => {
         return;
     }
 
+
+
     // Création nouvel élément txtTag //
     const newTxtTag = document.createElement('span');
     newTxtTag.className = 'txt-tag';
@@ -118,9 +136,11 @@ const addNewTxtTag = (item, tagType) => {
     tagContainer.style.display = 'flex';
 
     // Ajout gestionnaire d'événements pour le clic sur la croix de fermeture du tag hors du collapse //
+
     const xClose = newTxtTag.querySelector('.fa-xmark');
     xClose.addEventListener('click', () => {
         newTxtTag.style.display = 'none';
+        renderRecipes(filteredRecipes);
     });
 };
 
@@ -164,7 +184,7 @@ const createDropdown = (data, sectionId) => {
         });
     });
 
-    const itemsArray = data.map(item => `<li class="dropdown-item filterable-item" href="#" id="item-${sectionId}-${item}" data-item="${item}" onclick="handleItemClick('${item}', '${sectionId}')">${item}</li>`);
+    const itemsArray = data.map(item => `<li class="dropdown-item filterable-item" href="#" id="item-${sectionId}-${item}" data-item="${item}" onclick="listCollapseClick('${item}', '${sectionId}')">${item}</li>`);
     return `
     <p class="dropdown">
         <button class="btn btn-primary" type="button id="dropdownMenuButton-${sectionId}" data-bs-toggle="collapse" href="#collapseExemple-${sectionId}" role="button" aria-expanded="false" aria-controls="collapseExample"  aria-label="Bouton${sectionId}">
