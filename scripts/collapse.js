@@ -140,7 +140,7 @@ const addNewTxtTag = (item, tagType) => {
     }
 
     // Création nouvel élément txtTag //
-    const newTxtTag = document.createElement('li');
+    const newTxtTag = document.createElement('span');
     newTxtTag.className = 'txt-tag';
     newTxtTag.innerHTML = `${item}<strong class="fa-solid fa-xmark"></strong>`;
 

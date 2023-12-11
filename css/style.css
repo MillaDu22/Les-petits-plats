@@ -41,6 +41,7 @@ header {
     left:69px;
     object-fit: cover;
 }
+
 .form-group-search-bar {
     display: flex;
     flex-direction: column;
@@ -112,6 +113,7 @@ main {
     justify-content: space-between;
     width:75%;
 }
+
 .dropdown{
     position:relative;
     display:flex;
@@ -120,9 +122,8 @@ main {
     flex-wrap: wrap;
 }
 
-
 /* Bouton */
-.btn-primary{
+.btn-primary[aria-expanded="false"] {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -140,11 +141,27 @@ main {
     border:none;
 }
 
-.btn-primary:hover, .btm-primary:active {
+
+.btn-primary[aria-expanded="true"] {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-width: 156px;
+    padding: 17px 16px;
+    background: white;
+    color: black;
+    outline: none;
+    border-radius: 11px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+    text-decoration: none;
+    border:none;
     background: white;
     color:black;
-    border-radius: 11px 11px 0px 0px;
-} 
+    border-radius: 11px 11px 0px 0px;   
+}
 
 .collapse.show::after{
     background: white;
@@ -152,6 +169,11 @@ main {
 
 .fa-chevron-down  {
     color:black;
+    transition: transform 0.3s;
+}
+
+.btn-primary[aria-expanded="true"] .fa-chevron-down {
+    transform: rotate(180deg);
 }
 
 /* Flèche stylisée */
@@ -163,8 +185,8 @@ main {
 .collapse{
     display: flex;
     position:relative;
-    margin-top:51px;
-    margin-left:-34.6%;
+    margin-top:58px;
+    margin-left:-34.7%;
     width:30.7%;
     min-width: 156px;
     max-height: 340px;
@@ -174,7 +196,6 @@ main {
     border:none;
     overflow: hidden;
 }
-
 
 /* Menu déroulant ouvert */
 .collapse.show {
@@ -200,10 +221,15 @@ main {
 }
 
 .list-drop {
-    margin-left:-37px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     font-size:14px;
     font-weight:400;
     color:black;
+    width:100%;
+    padding: 0;
+    margin-left: 0%;
 }
 
 .tag-list {
@@ -222,13 +248,29 @@ main {
     margin-bottom: 20px;
     width:105%;
     padding-left:25px;
+    cursor:pointer;
 }
+
+.tag-list:hover {
+    font-weight: bold;
+    background: #FFD15B;
+}
+
+.tag-list img {
+    display: none;
+}
+
+.tag-list:hover img {
+    display: block; 
+}
+
 
 /************* tags **************/
 .title-main {
     font-family:"Anton";
     font-size:1.5em;
 }
+
 .container-tag-ingredients {
     display:flex;
     flex-direction: row;
@@ -237,28 +279,28 @@ main {
     width:75%;
     overflow: hidden;
 }
+
 #ulTagIngredients, #ulTagAppliances, #ulTagUstensils {
     display:flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     position: relative;
-    margin-left:-20px;
-    margin-right:20px;
-    width:34%;
+    margin-left:0px;
+    margin-right:0px;
+    width:30.7%;
 }
+
 .tag {
     position:relative;
     margin-top:20px;
     display: none;
     flex-direction: row;
-    flex-wrap: wrap;
     border-radius:10px;
     min-height:53px;
-    width:30.7%;
+    width:100%;
     list-style: none;
 }
-
 
 .txt-tag {
     display: flex;
@@ -273,16 +315,26 @@ main {
     font-weight:400;
     color:black;
     line-height: 19px;
-    width:203px;
+    width:100%;
     height:53px;
     margin-top: 2%;
-    margin-left: -5%;
+    margin-left: 0%;
     margin-right: 6.8%;
+    cursor:ponter;
+}
+
+.txt-tag:hover {
+    font-weight: bold;
 }
 
 .fa-xmark {
+    display:none;
     color:black;
     font-size:14px;
+}
+
+.txt-tag:hover strong {
+    display:block;
 }
 
 /***************  gallery cards recipes *********/
@@ -312,6 +364,15 @@ main {
     width: 100%;
     height:253px;
     object-fit: cover;
+}
+.span-time {
+    padding:5px 15px 5px 15px;
+    position:absolute;
+    background: #FFD15B;
+    border-radius:14px;
+    width:85px;
+    top:21px;
+    right:21px;
 }
 
 .title-recipe {
@@ -369,6 +430,7 @@ main {
 .name-ingredient {
     font-weight: bold ;
 }
+
 @media screen and (max-width: 667px) {
     header {
         justify-content: center;
@@ -433,7 +495,7 @@ main {
     .fa-magnifying-glass {
         position: absolute;
         top:18px;
-        left:93%;
+        right:12px;
     }
 
 
@@ -456,4 +518,14 @@ main {
     .card {
         width:100%;
     }
+
+    .container-tag-ingredients {
+        flex-direction: column;
+        width:90%;
+    }
+    #ulTagIngredients, #ulTagAppliances, #ulTagUstensils {
+        width:100%;
+    }
+
+
 }
