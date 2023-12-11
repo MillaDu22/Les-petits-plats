@@ -123,7 +123,7 @@ main {
 }
 
 /* Bouton */
-.btn-primary{
+.btn-primary[aria-expanded="false"] {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -141,11 +141,27 @@ main {
     border:none;
 }
 
-.btn-primary:hover, .btm-primary:active {
+
+.btn-primary[aria-expanded="true"] {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-width: 156px;
+    padding: 17px 16px;
+    background: white;
+    color: black;
+    outline: none;
+    border-radius: 11px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+    text-decoration: none;
+    border:none;
     background: white;
     color:black;
-    border-radius: 11px 11px 0px 0px;
-} 
+    border-radius: 11px 11px 0px 0px;   
+}
 
 .collapse.show::after{
     background: white;
@@ -169,8 +185,8 @@ main {
 .collapse{
     display: flex;
     position:relative;
-    margin-top:51px;
-    margin-left:-34.6%;
+    margin-top:58px;
+    margin-left:-34.7%;
     width:30.7%;
     min-width: 156px;
     max-height: 340px;
@@ -206,7 +222,6 @@ main {
 }
 
 .list-drop {
-    margin-left:-37px;
     font-size:14px;
     font-weight:400;
     color:black;
@@ -475,7 +490,7 @@ main {
     .fa-magnifying-glass {
         position: absolute;
         top:18px;
-        left:93%;
+        right:12px;
     }
 
 
