@@ -77,42 +77,53 @@ const handleItemClick = (item, sectionId) => {
 
     const xLi = document.getElementById(`x-selection-${sectionId}`);
     xLi.addEventListener('click', () => {
-        tagList.style.display = item ? 'none' : 'flex';
+        tagList.style.display = 'none';
+        renderRecipes(filteredRecipes);
     });
 
-    const selectedTags = document.querySelectorAll('.filterable-tag');
-    const selectedTagValues = [];
+     // Filtre les recettes en fonction des tags sélectionnés //
+    const allSelectedTags = document.querySelectorAll('.filterable-tag');
+    const allSelectedTagValues = Array.from(allSelectedTags).map(tag => tag.innerText.toLowerCase());
 
-    for (let i = 0; i < selectedTags.length; i++) {
-        const tag = selectedTags[i];
-        selectedTagValues.push(tag.innerText.toLowerCase());
-    }
+    // Création copie de la liste complète des recettes déjà filtrée //
+    const originalRecipes = [...filteredRecipes];
 
+    // Applique le deuxième niveau de filtrage directement sur filteredRecipes //
     const doublyFilteredRecipes = [];
-    for (let i = 0; i < filteredRecipes.length; i++) {
-        const recipe = filteredRecipes[i];
+    for (let i = 0; i < originalRecipes.length; i++) {
+        const recipe = originalRecipes[i];
+
+        // Déclaration des tableaux de base //
         const ingredientTags = [];
+        const applianceTags = [];
+        const ustensilTags = [];
+
+        // Remplissage des tableaux avec les valeurs correspondantes //
         for (let j = 0; j < recipe.ingredients.length; j++) {
             const ingredient = recipe.ingredients[j];
             ingredientTags.push(ingredient.ingredient.toLowerCase());
         }
-        const applianceTags = recipe.appliance.toLowerCase();
-        const ustensilTags = [];
-        for (let j = 0; j < recipe.ustensils.length; j++) {
-            const ustensil = recipe.ustensils[j];
+
+        applianceTags.push(recipe.appliance.toLowerCase());
+
+        for (let k = 0; k < recipe.ustensils.length; k++) {
+            const ustensil = recipe.ustensils[k];
             ustensilTags.push(ustensil.toLowerCase());
         }
 
-        if (selectedTagValues.some(tag => ingredientTags.includes(tag)) ||
-            selectedTagValues.includes(applianceTags) ||
-            selectedTagValues.some(tag => ustensilTags.includes(tag))) {
+        // Logique de filtrage //
+        if (
+            allSelectedTagValues.some(tag => ingredientTags.includes(tag)) ||
+            allSelectedTagValues.includes(applianceTags) ||
+            allSelectedTagValues.some(tag => ustensilTags.includes(tag))
+        ) {
             doublyFilteredRecipes.push(recipe);
         }
     }
+
+    // Affiche les recettes filtrées après les deux niveaux de filtrage //
     renderRecipes(doublyFilteredRecipes);
 };
-
-
 
 
 // Fonction pour ajouter un nouveau txtTag dans le conteneur approprié //
@@ -154,6 +165,8 @@ const addNewTxtTag = (item, tagType) => {
     const xClose = newTxtTag.querySelector('.fa-xmark');
     xClose.addEventListener('click', () => {
         newTxtTag.style.display = 'none';
+        renderRecipes(filteredRecipes);
+
     });
 };
 
