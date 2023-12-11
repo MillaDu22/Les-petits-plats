@@ -15,6 +15,7 @@ const renderRecipes = (recipes) => {
         gallery.innerHTML += `
             <figure class="card">
                 <img src="./assets/images/${recipe.image}" class="img-recipe" alt="${recipe.name}">
+                <span class ="span-time">${recipe.time}min</span>
                 <h3 class="title-recipe">${recipe.name}</h3>
                 <h4 class="subtitle-recipe">RECETTE</h4>
                 <p class="description">${recipe.description}</p>

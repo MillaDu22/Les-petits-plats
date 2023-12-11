@@ -107,7 +107,7 @@ const addNewTxtTag = (item, tagType) => {
     }
 
     // Création nouvel élément txtTag //
-    const newTxtTag = document.createElement('li');
+    const newTxtTag = document.createElement('span');
     newTxtTag.className = 'txt-tag';
     newTxtTag.innerHTML = `${item}<strong class="fa-solid fa-xmark"></strong>`;
 
@@ -169,7 +169,7 @@ const createDropdown = (data, sectionId) => {
     <p class="dropdown">
         <button class="btn btn-primary" type="button id="dropdownMenuButton-${sectionId}" data-bs-toggle="collapse" href="#collapseExemple-${sectionId}" role="button" aria-expanded="false" aria-controls="collapseExample"  aria-label="Bouton${sectionId}">
             ${sectionId}
-            <strong class ="fa-solid fa-chevron-down"></strong>
+            <strong class ="fa-solid fa-chevron-down" id="chevron-${sectionId}"></strong>
         </button>
     </p>
     <div class="dropdown-menu collapse" id="collapseExemple-${sectionId}">
@@ -185,6 +185,7 @@ const createDropdown = (data, sectionId) => {
 };
 // rendu initial avec listes complètes //
 renderCollapse();
+
 
 
 
