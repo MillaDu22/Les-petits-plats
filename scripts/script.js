@@ -117,7 +117,6 @@ const getAllValues = (data, type) => {
     return Array.from(itemsSet);
 };
 
-
 // Data listes des collapses par id //
 const renderSection = (sectionId, sectionData) => {
     const dropdownHTML = createDropdown(sectionData, sectionId);
@@ -126,59 +125,48 @@ const renderSection = (sectionId, sectionData) => {
 
 // Fonction pour gérer le clic sur un élément li de la liste de chaque collapse affichage des tags //
 // eslint-disable-next-line no-unused-vars
-const listCollapseClick = (item, sectionId) => {
+const listCollapseClick = (tag, sectionId) => {
     const tagList = document.getElementById(`tag-list-${sectionId}`); // Met à jour le tagList interieur collapse //
-    tagList.innerHTML = `${item}<img src="./assets/icons/XCloseItem.png" class="x-selection" id="x-selection-${sectionId}" alt="Croix de fermeture selection">`;
+    tagList.innerHTML = `${tag}<img src="./assets/icons/XCloseItem.png" class="x-selection" id="x-selection-${sectionId}" alt="Croix de fermeture selection">`;
     tagList.style.display = 'flex'; // Affiche le tagList //
     // Appel fonction nouveau txtTag hors collapse pour chaque élément liste sélectionné dans son container aproprié //
-    addNewTxtTag(item, sectionId);
+    addNewTxtTag(tag, sectionId);
 
     // Pour disparition tagList interieur collapse, click X //
     const xLi = document.getElementById(`x-selection-${sectionId}`);
     xLi.addEventListener('click', () => {    
         tagList.style.display ='none';
-        renderRecipes(filteredRecipes);
     });
 
-    xLi.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            tagList.style.display = 'none';
-            renderRecipes(filteredRecipes);
-        }
-    });
-    xLi.tabIndex = 0;
+    // Fonction pour filtrer les recettes en fonction des tags //
+    const filterRecipesByTags = (sectionId) => {
+        // Sélection des tags //
+        const allSelectedTags = document.querySelectorAll(`#tag-list-${sectionId}`);
+        const allSelectedTagValues = Array.from(allSelectedTags).map(tag => tag.innerText.toLowerCase());
 
-    // Creation tableau après premier filtrage //
-    const originalRecipes = [...filteredRecipes];
-     // Filtre les recettes en fonction des tags sélectionnés //
-    const allSelectedTags = document.querySelectorAll('.filterable-tag');
-    const allSelectedTagValues = Array.from(allSelectedTags).map(tag => tag.innerText.toLowerCase());
-    // Création copie de la liste complète des recettes déja filtrée //
-    const currentRecipes = [...originalRecipes];
-    // Applique le deuxième niveau de filtrage directement sur filteredRecipes //
-    const doublyFilteredRecipes = currentRecipes.filter(recipe => {
-        // Déclaration des tableaux de base //
-        const ingredientTags = [];
-        const applianceTags = [];
-        const ustensilTags = [];
+        // Filtrage des recettes //
+        const doublyFilteredRecipes = filteredRecipes.filter(recipe => {
+            const ingredientTags = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
+            const applianceTags = [recipe.appliance.toLowerCase()];
+            const ustensilTags = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
 
-        // Remplissage des tableaux avec les valeurs correspondantes //
-        recipe.ingredients.forEach(ingredient => {
-            ingredientTags.push(ingredient.ingredient.toLowerCase());
-        });
-        applianceTags.push(recipe.appliance.toLowerCase());
-        recipe.ustensils.forEach(ustensil => {
-            ustensilTags.push(ustensil.toLowerCase());
+            return (
+                allSelectedTagValues.some(tag => ingredientTags.includes(tag)) ||
+                allSelectedTagValues.some(tag => applianceTags.includes(tag)) ||
+                allSelectedTagValues.some(tag => ustensilTags.includes(tag))
+                
+            );
         });
 
-        // Logique de filtrage //
-        return allSelectedTagValues.some(tag => ingredientTags.includes(tag)) ||
-            allSelectedTagValues.includes(applianceTags) ||
-            allSelectedTagValues.some(tag => ustensilTags.includes(tag));
-    });
-    // Affiche les recettes filtrées après les deux niveaux de filtrage //
-    renderRecipes(doublyFilteredRecipes);
+        // Affichage des recettes filtrées //
+        renderRecipes(doublyFilteredRecipes);
+    };
+
+    // Appel de la fonction pour filtrer les recettes //
+    filterRecipesByTags(sectionId);
 };
+
+
 
 // Création des containers à tags //
 const TagContainer = document.getElementById('container-tag');
@@ -199,7 +187,7 @@ ulTagUstensils.classList.add('tag');
 TagContainer.appendChild(ulTagUstensils);
 
 // Fonction pour ajouter un nouveau txtTag dans le conteneur approprié //
-const addNewTxtTag = (item, tagType) => {
+const addNewTxtTag = (tag, tagType) => {
     // Sélection du conteneur approprié en fonction du type de tag //
     let tagContainer;
 
@@ -218,7 +206,8 @@ const addNewTxtTag = (item, tagType) => {
     // Création nouvel élément txtTag //
     const newTxtTag = document.createElement('span');
     newTxtTag.className = 'txt-tag';
-    newTxtTag.innerHTML = `${item}<strong class="fa-solid fa-xmark"></strong>`;
+    newTxtTag.id = 'txt-tag-${sectionId}';
+    newTxtTag.innerHTML = `${tag}<strong class="fa-solid fa-xmark"></strong>`;
 
     // Ajout du nouvel élément txtTag au conteneur ul //
     tagContainer.appendChild(newTxtTag);
@@ -226,20 +215,32 @@ const addNewTxtTag = (item, tagType) => {
     // Affiche le tag //
     tagContainer.style.display = 'flex';
 
+    // Fonction pour supprimer les recettes associées à un tag //
+    const removeRecipesByTag = (sectionId, tag) => {
+        const allSelectedTags = document.querySelectorAll(`#tag-list-${sectionId}`);
+        const allSelectedTagValues = Array.from(allSelectedTags).map(tag => tag.innerText.toLowerCase());
+        // Utilisation filteredRecipes et modifie pour exclure les recettes associées au tag //
+        filteredRecipes = filteredRecipes.filter(recipe => {
+            const ingredientTags = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
+            const applianceTags = [recipe.appliance.toLowerCase()];
+            const ustensilTags = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
+
+            return !(
+                (allSelectedTagValues === 'Ingredients' && ingredientTags.includes(tag.toLowerCase())) ||
+                (allSelectedTagValues === 'Appareils' && applianceTags.includes(tag.toLowerCase())) ||
+                (allSelectedTagValues === 'Ustensiles' && ustensilTags.includes(tag.toLowerCase()))
+            );
+        });
+        // Met à jour l'affichage des recettes //
+        renderRecipes(filteredRecipes);
+    };
+
     // Ajout gestionnaire d'événements pour le clic sur la croix de fermeture du tag hors du collapse //
     const xClose = newTxtTag.querySelector('.fa-xmark');
     xClose.addEventListener('click', () => {
         newTxtTag.style.display = 'none';
-        renderRecipes(filteredRecipes);
+        removeRecipesByTag(tagType, tag);
     });
-
-    xClose.addEventListener('keypress', (event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            newTxtTag.style.display = 'none';
-            renderRecipes(filteredRecipes);
-        }
-    });
-    xClose.tabIndex = 0;
 };
 
 // Filtrage input collapse //
@@ -261,7 +262,7 @@ filterDropdown;
 const createDropdown = (data, sectionId) => {
     // Fonction pour ouvrir un collapse spécifique //
     function openCollapse(sectionId) {
-        // Fermer tous les autres collapses
+        // Ferme tous les autres collapses //
         const allCollapseElements = document.querySelectorAll('.collapse');
         allCollapseElements.forEach(collapseElement => {
             // eslint-disable-next-line no-undef
@@ -284,7 +285,7 @@ const createDropdown = (data, sectionId) => {
         });
     });
 
-    const itemsArray = data.map(item => `<li class="dropdown-item filterable-item" href="#" id="item-${sectionId}-${item}" data-item="${item}" onclick="listCollapseClick('${item}', '${sectionId}')">${item}</li>`);
+    const itemsArray = data.map(item => `<li class="dropdown-item filterable-item" tabindex="0" role="button" href="#" id="item-${sectionId}-${item}" data-item="${item}" onclick="listCollapseClick('${item}', '${sectionId}')">${item}</li>`);
     return `
     <p class="dropdown">
         <button class="btn btn-primary" type="button id="dropdownMenuButton-${sectionId}" data-bs-toggle="collapse" href="#collapseExemple-${sectionId}" role="button" aria-expanded="false" aria-controls="collapseExample"  aria-label="Bouton${sectionId}">
