@@ -234,10 +234,10 @@ const addNewTxtTag = (tag, tagType) => {
     // Ajout gestionnaire d'événements pour le clic sur la croix de fermeture du tag hors du collapse //
     let xClose = newTxtTag.querySelector('.fa-xmark');
     xClose.addEventListener('click', () => {
-            // Retirer le tag du tableau allSelectedTagValues
+    // Retire le tag du tableau allSelectedTagValues //
     const removedTag = newTxtTag.textContent.toLowerCase();
     allSelectedTagValues = allSelectedTagValues.filter(tag => tag !== removedTag);
-
+    // Appel de removeRecipesByTags //
     removeRecipesByTags()
     newTxtTag.style.display = 'none';
     console.log(allSelectedTagValues, 'tags restants après suppression de tag')
@@ -246,7 +246,7 @@ const addNewTxtTag = (tag, tagType) => {
 
 const removeRecipesByTags = () => {
     // Obtention de la liste des tags restants après la suppression //
-    const remainingTags = Array.from(document.querySelectorAll('.txt-tag'))
+    let remainingTags = Array.from(document.querySelectorAll('.txt-tag'))
         .map(tag => tag.textContent.toLowerCase());
 
     // Utilisation soit allRecipes soit filteredRecipes comme base pour le filtrage //
