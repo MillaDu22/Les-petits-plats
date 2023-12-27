@@ -221,7 +221,6 @@ const listCollapseClick = (tag, sectionId, tagType) => {
         });
         // Mets à jour filteredRecipesByTags //
         filteredRecipesByTags = recipesToFilter;
-    
         // Affichage des recettes filtrées //
         renderRecipes(filteredRecipesByTags);
     };
