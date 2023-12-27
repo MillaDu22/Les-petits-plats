@@ -69,7 +69,8 @@ header {
 
 #label-search-bar {
     font-family:"Anton";
-    color:#867600;
+    /*color:#867600;*/
+    color: rgba(255, 255, 0, 0.74);
     width:53%;
     font-size: 2em;
     text-align: center;
@@ -96,7 +97,6 @@ main {
     width:100%;
     background: lightgrey ;
 }
-
 
 /************** Collapses **************/
 .box-selects {
@@ -341,7 +341,7 @@ main {
 /***************  gallery cards recipes *********/
 .gallery {
     position: relative;
-    margin-top:40px;
+    margin-top:20px;
     display:flex;
     flex-direction: row;
     justify-content: space-between;

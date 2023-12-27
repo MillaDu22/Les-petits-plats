@@ -14,48 +14,48 @@ const renderRecipes = (recipes) => {
         gallery.removeChild(gallery.firstChild);
     }
 
-    // Ajoute chaque recette à la galerie
+    // Ajoute chaque recette à la galerie //
     recipes.forEach(recipe => {
-        // Crée la figure
+        // Crée la figure //
         const figure = document.createElement('figure');
         figure.classList.add('card');
 
-        // Crée l'image
+        // Crée l'image //
         const image = document.createElement('img');
         image.src = `./assets/images/${recipe.image}`;
         image.classList.add('img-recipe');
-        image.alt = recipe.name;
+        image.alt = `Image de la recette : ${recipe.name}`;
 
-        // Crée la durée de la recette
+        // Crée la durée de la recette //
         const spanTime = document.createElement('span');
         spanTime.classList.add('span-time');
         spanTime.textContent = `${recipe.time}min`;
 
-        // Crée le titre de la recette
+        // Crée le titre de la recette //
         const titleRecipe = document.createElement('h3');
         titleRecipe.classList.add('title-recipe');
         titleRecipe.textContent = recipe.name;
 
-        // Crée le sous-titre RECETTE
+        // Crée le sous-titre RECETTE //
         const subtitleRecipe = document.createElement('h4');
         subtitleRecipe.classList.add('subtitle-recipe');
         subtitleRecipe.textContent = 'RECETTE';
 
-        // Crée la description de la recette
+        // Crée la description de la recette //
         const description = document.createElement('p');
         description.classList.add('description');
         description.textContent = recipe.description;
 
-        // Crée le sous-titre INGREDIENTS
+        // Crée le sous-titre INGREDIENTS //
         const subtitleIngredients = document.createElement('h5');
         subtitleIngredients.classList.add('subtitle-ingredients');
         subtitleIngredients.textContent = 'INGREDIENTS';
 
-        // Crée la liste des ingrédients
+        // Crée la liste des ingrédients //
         const ingredientsList = document.createElement('ul');
         ingredientsList.classList.add('ingredients-list');
 
-        // Ajoute chaque ingrédient à la liste
+        // Ajoute chaque ingrédient à la liste //
         recipe.ingredients.forEach(ingredient => {
             const ingredientItem = document.createElement('li');
             ingredientItem.classList.add('ingredient');
@@ -68,15 +68,15 @@ const renderRecipes = (recipes) => {
             quantity.classList.add('quantity');
             quantity.textContent = `${ingredient.quantity}${ingredient.unit ? ingredient.unit : ''}`;
 
-            // Ajoute les éléments à l'élément d'ingrédient
+            // Ajoute les éléments à l'élément d'ingrédient //
             ingredientItem.appendChild(nameIngredient);
             ingredientItem.appendChild(quantity);
 
-            // Ajoute l'élément d'ingrédient à la liste des ingrédients
+            // Ajoute l'élément d'ingrédient à la liste des ingrédients //
             ingredientsList.appendChild(ingredientItem);
         });
 
-        // Ajoute tous les éléments à la figure
+        // Ajoute tous les éléments à la figure //
         figure.appendChild(image);
         figure.appendChild(spanTime);
         figure.appendChild(titleRecipe);
@@ -85,7 +85,7 @@ const renderRecipes = (recipes) => {
         figure.appendChild(subtitleIngredients);
         figure.appendChild(ingredientsList);
 
-        // Ajoute la figure à la galerie
+        // Ajoute la figure à la galerie //
         gallery.appendChild(figure);
     });
 };
@@ -191,16 +191,15 @@ const renderSection = (sectionId, sectionData) => {
 // eslint-disable-next-line no-unused-vars
 const listCollapseClick = (tag, sectionId, tagType) => {
     const tagList = document.getElementById(`tag-list-${sectionId}`); // Met à jour le tagList interieur collapse //
-    tagList.innerHTML = `${tag}<img src="./assets/icons/XCloseItem.png" class="x-selection" id="x-selection-${sectionId}" alt="Croix de fermeture selection">`;
+    tagList.innerHTML = `${tag}<img src="./assets/icons/XCloseItem.png" class="x-selection" id="x-selection-${sectionId}" alt="Croix de fermeture selection" tabindex=0>`;
     tagList.style.display = 'flex'; // Affiche le tagList //
     // Appel fonction nouveau txtTag hors collapse pour chaque élément liste sélectionné dans son container aproprié //
     addNewTxtTag(tag, sectionId, tagType);
-
     // Pour disparition tagList interieur collapse, click X //
     const xLi = document.getElementById(`x-selection-${sectionId}`);
     xLi.addEventListener('click', () => {    
         tagList.style.display ='none';
-    });   
+    }); 
     const filterRecipesByTags = () => {
         // Sélection des tags //
         allSelectedTags = document.querySelectorAll('.txt-tag');
@@ -267,7 +266,7 @@ const addNewTxtTag = (tag, tagType) => {
     const newTxtTag = document.createElement('span');
     newTxtTag.className = 'txt-tag';
     newTxtTag.id = `txt-tag-${tagType}`;
-    newTxtTag.innerHTML = `${tag}<strong class="fa-solid fa-xmark"></strong>`;
+    newTxtTag.innerHTML = `${tag}<strong class="fa-solid fa-xmark" tabindex = 0></strong>`;
     // Ajout du nouvel élément txtTag au conteneur ul //
     tagContainer.appendChild(newTxtTag);
     // Affiche le tag //
@@ -361,7 +360,7 @@ const createDropdown = (data, sectionId) => {
             <input type="text" class="form-control" id="search-drop-${sectionId}" aria-label="Champs de recherche" oninput="filterDropdown('${sectionId}')">
             <strong class="fa-solid fa-magnifying-glass"></strong>
         </div>
-        <span class="dropdown-item tag-list filterable-tag" id="tag-list-${sectionId}" href="#"><img src="./assets/icons/XCloseItem.png"  alt ="Croix de fermeture selection"></span>
+        <span class="dropdown-item tag-list filterable-tag" id="tag-list-${sectionId}" href="#" tabindex=0><img src="./assets/icons/XCloseItem.png"  alt ="Croix de fermeture selection" tabindex=0></span>
         <ul class="list-drop" data-section-data='${JSON.stringify(data)}'>
             ${itemsArray.join('')}
         </ul>
