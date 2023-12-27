@@ -25,7 +25,8 @@
                 "unit" : "grammes"
             },
             {
-                "ingredient": "Glaçons"
+                "ingredient": "Glaçons",
+                "quantity" : 3
             }
         ],
         "time": 10,
@@ -313,7 +314,8 @@
                 "quantity": 1
             },
             {
-                "ingredient": "Olives"
+                "ingredient": "Olives",
+                "quantity" : 30
             },
             {
                 "ingredient": "Fromage de chèvre",
@@ -321,13 +323,19 @@
                 "unit": "grammes"
             },
             {
-                "ingredient": "Vinaigre Balsamic"
+                "ingredient": "Vinaigre Balsamic",
+                "quantity" : 30,
+                "unit": "cl"
             },
             {
-                "ingredient": "Huile d'olive"
+                "ingredient": "Huile d'olive",
+                "quantity" : 30,
+                "unit": "cl"
             }, 
             {
-                "ingredient": "Basilic"    
+                "ingredient": "Basilic",  
+                "quantity" : 3,
+                "unit": "feuilles"
             }
         ],
         "time": 15,
@@ -620,7 +628,9 @@
                 "quantity": 8
             },
             {
-                "ingredient": "Menthe"
+                "ingredient": "Menthe",
+                "quantity" : 3,
+                "unit": "feuilles"
             }
         ],
         "time": 15,
@@ -934,7 +944,9 @@
                 "quantity": 1
             },
             {
-                "ingredient": "Huile d'olives"
+                "ingredient": "Huile d'olives",
+                "quantity" : 30,
+                "unit": "cl"
             },
             {
                 "ingredient": "Oignon",
@@ -1043,10 +1055,14 @@
                 "quantity": 2
             },
             {
-                "ingredient": "Huile d'olive"
+                "ingredient": "Huile d'olive",
+                "quantity" : 30,
+                "unit": "cl"
             },
             {
-                "ingredient": "Paprika"
+                "ingredient": "Paprika",
+                "quantity" : 3,
+                "unit": "grammes"
             }
         ],
         "time": 30,
@@ -1210,7 +1226,9 @@
                 "unit": "cl"
             },
             {
-                "ingredient": "Huile d'olive"
+                "ingredient": "Huile d'olive",
+                "quantity" : 3,
+                "unit": "cl"
             },
             {
                 "ingredient": "Orange",
@@ -1518,7 +1536,9 @@
                 "quantity": 3
             },
             {
-                "ingredient": "Citron"
+                "ingredient": "Citron",
+                "quantity" : 1,
+                "unit": "kg"
             }
         ],
         "time": 50,
