@@ -126,7 +126,7 @@ fetch(url)
     console.error('Error fetching recipes:', error);
 });
 
-/************************************* Collapses second filtrage ******************************/
+/************************************* Collapses second filtrage *****************************************/
 
 // Function fetch JSON data //
 const collapseUrl = "./data/data.json";
@@ -293,8 +293,7 @@ const removeRecipesByTags = () => {
         const ingredientTags = recipe.ingredients.map(ingredient => ingredient.ingredient.toLowerCase());
         const applianceTags = [recipe.appliance.toLowerCase()];
         const ustensilTags = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
-        // Retourne true si le tag est présent, false sinon (inverse du filtrage) //
-        //return remainingTags.some(tag => 
+        // Retourne true si le tag est présent, false sinon (inverse du filtrageByTags) //
         const isRecipeValid = removeAllSelectedTagValues.some(tag => 
             !ingredientTags.includes(tag) &&
             !applianceTags.includes(tag) &&

@@ -442,8 +442,17 @@ main {
     }
 
     .logo-header {
-        width:50%;
-        margin-left:30px;
+        position:absolute;
+        left:auto;
+        right:auto;
+    }
+
+    #label-search-bar {
+        font-size: 24px;
+    }
+
+    #search-bar {
+        padding-left: 25px;
     }
 
     .box-selects {
