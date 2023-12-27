@@ -7,7 +7,7 @@ let allSelectedTags =[];
 let allSelectedTagValues = [];
 let filteredRecipesByTags =[];
 let recipesToFilter =[]
-let removedRecipes = [];
+
 
 
 
@@ -244,10 +244,16 @@ const addNewTxtTag = (tag, tagType) => {
     });
 };
 
-const removeRecipesByTags = () => {
+const removeRecipesByTags = (sectionId) => {
+    const tagList = document.getElementById(`tag-list-${sectionId}`);
+    // Vérifie si tagList est défini avant d'accéder à ses propriétés //
+    if  (tagList )  {
+        tagList.style.display = 'none'; // Cache le tagList interne au repli //
+    }
     // Obtention de la liste des tags restants après la suppression //
-    let remainingTags = Array.from(document.querySelectorAll('.txt-tag'))
-        .map(tag => tag.textContent.toLowerCase());
+    let removeAllSelectedTagValues = Array.from(allSelectedTags).map(tag => tag.textContent.toLowerCase());
+    removeAllSelectedTagValues = [...allSelectedTagValues]
+        console.log(`allSelectedTagValues avant remove:`, removeAllSelectedTagValues);
 
     // Utilisation soit allRecipes soit filteredRecipes comme base pour le filtrage //
     recipesToFilter = filteredRecipes.length > 0 ? [...filteredRecipes] : [...allRecipes];
@@ -258,21 +264,23 @@ const removeRecipesByTags = () => {
         const applianceTags = [recipe.appliance.toLowerCase()];
         const ustensilTags = recipe.ustensils.map(ustensil => ustensil.toLowerCase());
 
+
         // Retourne true si le tag est présent, false sinon (inverse du filtrage) //
-        return remainingTags.some(tag => 
-            ingredientTags.includes(tag) ||
-            applianceTags.includes(tag) ||
-            ustensilTags.includes(tag)
+        //return remainingTags.some(tag => 
+        const isRecipeValid = removeAllSelectedTagValues.some(tag => 
+            !ingredientTags.includes(tag) &&
+            !applianceTags.includes(tag) &&
+            !ustensilTags.includes(tag)
         );
+        return !isRecipeValid;
     });
 
-    // Console log pour voir les recettes après le retrait des tags //
-    console.log(recipesToFilter);
-
-    // Mets à jour filteredRecipesByTags //
+    // Met à jour filteredRecipesByTags //
     filteredRecipesByTags = recipesToFilter;
+    console.log(`filteredRecipesByTags après remove:`, filteredRecipesByTags);
+    console.log(`allSelectedTagsValues après remove`, removeAllSelectedTagValues);
 
-    // Affichage les recettes refiltrées //
+    // Affichage des recettes refiltrées //
     renderRecipes(filteredRecipesByTags);
 }
 
