@@ -151,9 +151,14 @@ const renderCollapse = () => {
             const allUstensils = getAllValues(data, 'ustensils');
 
             // Render section des 3 collapses //
-            renderSection('Ingredients', allIngredients);
-            renderSection('Appareils', allAppareils);
-            renderSection('Ustensiles', allUstensils);
+            const ingredientsDropdown = createDropdown(allIngredients, 'Ingredients');
+            const appareilsDropdown = createDropdown(allAppareils, 'Appareils');
+            const ustensilsDropdown = createDropdown(allUstensils, 'Ustensiles');
+
+            // Append 3 dropdowns dans leur container //
+            collapseContainer.appendChild(ingredientsDropdown);
+            collapseContainer.appendChild(appareilsDropdown);
+            collapseContainer.appendChild(ustensilsDropdown);
         } else {
             console.error('Data is not an array:', data);
         }
@@ -187,12 +192,6 @@ const getAllValues = (data, type) => {
         }
     });
     return Array.from(itemsSet);
-};
-
-// Data listes des collapses par id //
-const renderSection = (sectionId, sectionData) => {
-    const dropdownHTML = createDropdown(sectionData, sectionId);
-    collapseContainer.innerHTML += dropdownHTML;
 };
 
 // Fonction pour gérer le clic sur un élément li de la liste de chaque collapse affichage des tags //
@@ -322,7 +321,7 @@ const filterDropdown = (sectionId) => {
     const searchTerm = searchInput.value.toLowerCase();
 
     listItems.forEach(item => {
-        const itemText = item.innerText.toLowerCase();
+        const itemText = item.textContent.toLowerCase();
         const isVisible = itemText.includes(searchTerm);
         item.style.display = isVisible ? 'block' : 'none';
     });
@@ -353,24 +352,89 @@ const createDropdown = (data, sectionId) => {
             openCollapse(sectionId);
         });
     });
-    const itemsArray = data.map(item => `<li class="dropdown-item filterable-item" tabindex="0" role="button" href="#" id="item-${sectionId}-${item}" data-item="${item}" onclick="listCollapseClick('${item}', '${sectionId}')">${item}</li>`);
-    return `
-    <p class="dropdown">
-        <button class="btn btn-primary" type="button id="dropdownMenuButton-${sectionId}" data-bs-toggle="collapse" href="#collapseExemple-${sectionId}" role="button" aria-expanded="false" aria-controls="collapseExample"  aria-label="Bouton${sectionId}">
-            ${sectionId}
-            <strong class ="fa-solid fa-chevron-down" id="chevron-${sectionId}"></strong>
-        </button>
-    </p>
-    <div class="dropdown-menu collapse" id="collapseExemple-${sectionId}">
-        <div class="form-group">
-            <input type="text" class="form-control" id="search-drop-${sectionId}" aria-label="Champs de recherche" oninput="filterDropdown('${sectionId}')">
-            <strong class="fa-solid fa-magnifying-glass"></strong>
-        </div>
-        <span class="dropdown-item tag-list filterable-tag" id="tag-list-${sectionId}" href="#" tabindex=0><img src="./assets/icons/XCloseItem.png"  alt ="Croix de fermeture selection" tabindex=0></span>
-        <ul class="list-drop" data-section-data='${JSON.stringify(data)}'>
-            ${itemsArray.join('')}
-        </ul>
-    </div>`;
+    // Creation des elements collapses //
+    const dropdownContainer = document.createElement('p');
+    dropdownContainer.classList.add('dropdown');
+    // Le bouton //
+    const button = document.createElement('button');
+    button.classList.add('btn', 'btn-primary');
+    button.setAttribute('type', 'button');
+    button.setAttribute('id', `dropdownMenuButton-${sectionId}`);
+    button.setAttribute('data-bs-toggle', 'collapse');
+    button.setAttribute('data-bs-target', `#collapseExemple-${sectionId}`);
+    button.setAttribute('role', 'button');
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-controls', `collapseExemple-${sectionId}`);
+    button.setAttribute('aria-label', `Bouton${sectionId}`);
+    button.setAttribute('data-section-id', sectionId);
+
+    const buttonText = document.createTextNode(sectionId);
+    const chevronIcon = document.createElement('strong');
+    chevronIcon.classList.add('fa-solid', 'fa-chevron-down');
+    chevronIcon.setAttribute('id', `chevron-${sectionId}`);
+
+    button.appendChild(buttonText);
+    button.appendChild(chevronIcon);
+
+    dropdownContainer.appendChild(button);
+
+    const collapseDiv = document.createElement('div');
+    collapseDiv.classList.add('dropdown-menu', 'collapse');
+    collapseDiv.setAttribute('id', `collapseExemple-${sectionId}`);
+    // Champs de recherche du collapse //
+    const formGroup = document.createElement('div');
+    formGroup.classList.add('form-group');
+
+    const input = document.createElement('input');
+    input.setAttribute('type', 'text');
+    input.classList.add('form-control');
+    input.setAttribute('id', `search-drop-${sectionId}`);
+    input.setAttribute('aria-label', 'Champs de recherche');
+    input.addEventListener('input', () => filterDropdown(sectionId));
+
+    const magnifyingGlass = document.createElement('strong');
+    magnifyingGlass.classList.add('fa-solid', 'fa-magnifying-glass');
+
+    formGroup.appendChild(input);
+    formGroup.appendChild(magnifyingGlass);
+
+    collapseDiv.appendChild(formGroup);
+    // Tag de selectiob interne au collapse //
+    const tagList = document.createElement('span');
+    tagList.classList.add('dropdown-item', 'tag-list', 'filterable-tag');
+    tagList.setAttribute('id', `tag-list-${sectionId}`);
+    tagList.setAttribute('tabindex', '0');
+    // X de fermeture de selection //
+    const closeItemImage = document.createElement('img');
+    closeItemImage.setAttribute('src', './assets/icons/XCloseItem.png');
+    closeItemImage.setAttribute('alt', 'Croix de fermeture selection');
+    closeItemImage.setAttribute('tabindex', '0');
+
+    tagList.appendChild(closeItemImage);
+    collapseDiv.appendChild(tagList);
+    // Liste //
+    const itemList = document.createElement('ul');
+    itemList.classList.add('list-drop');
+    itemList.setAttribute('data-section-data', JSON.stringify(data));
+    // Elements de liste clickable, selection //
+    data.forEach(item => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('dropdown-item', 'filterable-item');
+        listItem.setAttribute('tabindex', '0');
+        listItem.setAttribute('role', 'button');
+        listItem.setAttribute('href', '#');
+        listItem.setAttribute('id', `item-${sectionId}-${item}`);
+        listItem.setAttribute('data-item', item);
+        listItem.addEventListener('click', () => listCollapseClick(item, sectionId));
+        listItem.textContent = item;
+
+        itemList.appendChild(listItem);
+    });
+
+    collapseDiv.appendChild(itemList);
+    dropdownContainer.appendChild(collapseDiv);
+
+    return dropdownContainer;
 };
 // rendu initial avec listes complètes //
 renderCollapse();
