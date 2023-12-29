@@ -314,7 +314,7 @@ const filterDropdown = (sectionId) => {
     const searchTerm = searchInput.value.toLowerCase();
 
     listItems.forEach(item => {
-        const itemText = item.innerText.toLowerCase();
+        const itemText = item.textContent.toLowerCase();
         const isVisible = itemText.includes(searchTerm);
         item.style.display = isVisible ? 'block' : 'none';
     });
