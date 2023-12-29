@@ -9,7 +9,8 @@ html {
 
 body {
     width:100%;
-    margin:0;
+    margin-left :auto;
+    margin-right: auto;
     padding:0;
     box-sizing: border-box;
 }
@@ -38,7 +39,7 @@ header {
     height:25.26px;
     position:absolute;
     top:51px;
-    left:69px;
+    left:5%;
     object-fit: cover;
 }
 
