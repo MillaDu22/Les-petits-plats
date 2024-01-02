@@ -111,6 +111,52 @@ searchInput.addEventListener('input', function () {
     renderRecipes(filteredRecipes)
 });
 
+// Changement de loop au survol //
+// Récupére l'élément avec la classe 'black' //
+const blackLoop = document.querySelector('.black');
+
+// Ajout gestionnaire d'événements pour le survol //
+blackLoop.addEventListener('mouseover', function () {
+    // Change la source de l'image lors du survol //
+    blackLoop.src = "./assets/icons/yellowloop.png";
+});
+
+// Ajout gestionnaire d'événements pour la sortie du survol //
+blackLoop.addEventListener('mouseout', function () {
+    // Retour à loop noire lors de la sortie du survol //
+    blackLoop.src = "./assets/icons/Blackloop.png";
+});
+
+// pour afficher l'icone xmark au survol de l'input //
+// Récupére l'élément container de l'input //
+var searchBarContainer = document.querySelector('.box-input-loop');
+
+// Ajout gestionnaire d'événements pour le survol du container de l'input //
+searchBarContainer.addEventListener('mouseover', function () {
+    // Affiche l'icône X lors du survol //
+    document.getElementById('clear-input').style.display = 'inline-block';
+});
+
+// Ajout gestionnaire d'événements pour la sortie du survol du container de l'input //
+searchBarContainer.addEventListener('mouseout', function () {
+    // Cache l'icône X à la sortie du survol //
+    document.getElementById('clear-input').style.display = 'none';
+});
+
+// Pour vider le champs input et réafficher toutes les recettes //
+// Récupére l'élément avec l'ID 'clear-input' //
+const clearInput = document.getElementById('clear-input');
+
+// Récupére l'élément input //
+const searchBar = document.getElementById('search-bar');
+
+// Ajout gestionnaire d'événements pour le clic sur l'icône xmark //
+clearInput.addEventListener('click', function () {
+    // Vide le contenu de l'input //
+    searchBar.value = '';
+    renderRecipes(allRecipes);
+});
+
 // Chargement de toutes les recettes au démarrage //
 fetch(url)
 .then(response => response.json())
@@ -190,6 +236,13 @@ const getAllValues = (data, type) => {
 // Fonction pour gérer le clic sur un élément li de la liste de chaque collapse affichage des tags //
 // eslint-disable-next-line no-unused-vars
 const listCollapseClick = (tag, sectionId, tagType) => {
+    // Fonction pour réinitialiser le champ de recherche //
+    function resetSearchInput(sectionId) {
+        const inputField = document.getElementById(`search-drop-${sectionId}`);
+        if (inputField) {
+            inputField.value = '';
+        }
+    }
     const tagList = document.getElementById(`tag-list-${sectionId}`); // Met à jour le tagList interieur collapse //
     tagList.innerHTML = `${tag}<img src="./assets/icons/XCloseItem.png" class="x-selection" id="x-selection-${sectionId}" alt="Croix de fermeture selection" tabindex=0>`;
     tagList.style.display = 'flex'; // Affiche le tagList //
@@ -199,7 +252,12 @@ const listCollapseClick = (tag, sectionId, tagType) => {
     const xLi = document.getElementById(`x-selection-${sectionId}`);
     xLi.addEventListener('click', () => {    
         tagList.style.display ='none';
+        // Réinitialise la valeur de l'input à une chaîne vide //
+        resetSearchInput(sectionId);
+        // Rechargement des listes initiales dans les collapses //
+        filterDropdown(sectionId)
     }); 
+    
     const filterRecipesByTags = () => {
         // Sélection des tags //
         allSelectedTags = document.querySelectorAll('.txt-tag');

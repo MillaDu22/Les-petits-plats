@@ -66,6 +66,25 @@ header {
     position: absolute;
     right:1.1%;
     z-index:2;
+    cursor: pointer;
+}
+
+.yellow {
+    display:none;
+}
+
+#clear-input{
+    display:none;
+    position:absolute;
+    color:grey;
+    right:80px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#search-bar-container:hover #clear-input {
+    display: inline-block;  
+    /* Affiche l'icône X lors du survol de l'input */
 }
 
 #label-search-bar {
@@ -86,6 +105,11 @@ header {
     width:100%;
     padding-left:35px;
     border-radius:11px;
+    text-overflow: ellipsis;
+}
+
+#search-bar::placeholder {
+    width: 80%;
 }
 
 main {
@@ -100,7 +124,7 @@ main {
 
 /************** Collapses **************/
 .box-selects {
-    margin-top:10px;
+    margin-top:50px;
     display:flex;
     flex-direction:row;
     justify-content: space-between;
@@ -186,7 +210,7 @@ main {
     position:relative;
     width:100%;
     min-width: 156px;
-    max-height: 340px;
+    max-height: 240px;
     border-radius: 0px 0px 11px 11px;
     flex-direction: column;
     background-color: white;
@@ -197,7 +221,7 @@ main {
 /* Menu déroulant ouvert */
 .collapse.show {
     position:relative;
-    max-height: 340px;
+    max-height: 240px;
     overflow: hidden;
 
 }
@@ -273,7 +297,6 @@ main {
     justify-content: space-between;
     align-items: center;
     width:75%;
-    overflow: hidden;
 }
 
 #ulTagIngredients, #ulTagAppliances, #ulTagUstensils {
@@ -281,6 +304,7 @@ main {
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    min-width: 156px;
     position: relative;
     margin-left:0px;
     margin-right:0px;
@@ -295,6 +319,7 @@ main {
     border-radius:10px;
     min-height:53px;
     width:100%;
+    min-width: 156px;
     list-style: none;
 }
 
@@ -317,6 +342,7 @@ main {
     margin-left: 0%;
     margin-right: 6.8%;
     cursor:pointer;
+    min-width: 156px;
 }
 
 .txt-tag:hover {
@@ -452,6 +478,10 @@ main {
 
     #search-bar {
         padding-left: 25px;
+    }
+
+    #clear-input{
+        left:10px;
     }
 
     .box-selects {
