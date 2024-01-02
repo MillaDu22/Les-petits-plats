@@ -162,6 +162,7 @@ clearInput.addEventListener('click', function () {
     // Vide le contenu de l'input //
     searchBar.value = '';
     renderRecipes(allRecipes);
+    document.getElementById('clear-input').style.display = 'none';
 });
 
 // Chargement de toutes les recettes au démarrage //
@@ -337,13 +338,27 @@ const addNewTxtTag = (tag, tagType) => {
     containerAllTags.style.display ='flex'
     // Ajout gestionnaire d'événements pour le clic sur la croix de fermeture du tag hors du collapse //
     let xClose = newTxtTag.querySelector('.fa-xmark');
-    xClose.addEventListener('click', () => {
-    // Retire le tag du tableau allSelectedTagValues //
-    const removedTag = newTxtTag.textContent.toLowerCase();
-    allSelectedTagValues = allSelectedTagValues.filter(tag => tag !== removedTag);
-    // Appel de removeRecipesByTags //
-    removeRecipesByTags()
-    newTxtTag.style.display = 'none';
+    xClose.addEventListener('click', (event) => {
+        event.preventDefault();
+        // Retire le tag du tableau allSelectedTagValues //
+        const removedTag = newTxtTag.textContent.toLowerCase();
+        allSelectedTagValues = allSelectedTagValues.filter(tag => tag !== removedTag);
+        // Appel de removeRecipesByTags //
+        removeRecipesByTags()
+        newTxtTag.style.display = 'none';
+        const tagListElements = document.getElementsByClassName('tag-list');        
+        // Vérifie si des éléments avec la classe spécifiée existent //
+        if (tagListElements.length > 0) {
+            // Masque l élément avec la classe spécifiée //
+            for (const tagListElement of tagListElements) {
+                if (tagListElement.textContent.toLowerCase() === removedTag) {
+                    tagListElement.style.display = 'none';
+                    break; // Sort de la boucle une fois que l'élément est trouvé et masqué //
+                }
+            }
+        } else {
+            console.error(`No elements found with class 'tag-list'.`);
+        }
     });
 };
 
