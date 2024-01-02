@@ -154,6 +154,7 @@ clearInput.addEventListener('click', function () {
     // Vide le contenu de l'input //
     searchBar.value = '';
     renderRecipes(allRecipes);
+    document.getElementById('clear-input').style.display = 'none';
 });
 
 // Chargement de toutes les recettes au démarrage //
@@ -287,6 +288,7 @@ const listCollapseClick = (tag, sectionId, tagType) => {
 
 // Création des containers à tags //
 const TagContainer = document.getElementById('container-tag');
+const containerAllTags =document.querySelector('.container-tag-ingredients');
 
 const ulTagIngredients = document.createElement('div');
 ulTagIngredients.id = 'ulTagIngredients';
@@ -327,10 +329,12 @@ const addNewTxtTag = (tag, tagType) => {
     tagContainer.appendChild(newTxtTag);
     // Affiche le tag //
     tagContainer.style.display = 'flex';
+    containerAllTags.style.display ='flex';
     // Ajout gestionnaire d'événements pour le clic sur la croix de fermeture du tag hors du collapse //
     let xClose = newTxtTag.querySelector('.fa-xmark');
 
-    xClose.addEventListener('click', () => {
+    xClose.addEventListener('click', (event) => {
+        event.preventDefault();
         // Retire le tag du tableau allSelectedTagValues //
         const removedTag = newTxtTag.textContent.toLowerCase();
         allSelectedTagValues = allSelectedTagValues.filter(tag => tag !== removedTag);

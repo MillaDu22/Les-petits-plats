@@ -124,7 +124,7 @@ main {
 
 /************** Collapses **************/
 .box-selects {
-    margin-top:50px;
+    margin-top:30px;
     display:flex;
     flex-direction:row;
     justify-content: space-between;
@@ -292,7 +292,7 @@ main {
 }
 
 .container-tag-ingredients {
-    display:flex;
+    display:none;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -362,7 +362,7 @@ main {
 /***************  gallery cards recipes *********/
 .gallery {
     position: relative;
-    margin-top:20px;
+    margin-top:30px;
     display:flex;
     flex-direction: row;
     justify-content: space-between;
