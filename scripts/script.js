@@ -127,29 +127,28 @@ blackLoop.addEventListener('mouseout', function () {
     blackLoop.src = "./assets/icons/Blackloop.png";
 });
 
-// pour afficher l'icone xmark au survol de l'input //
-// Récupére l'élément container de l'input //
-var searchBarContainer = document.querySelector('.box-input-loop');
-
-// Ajout gestionnaire d'événements pour le survol du container de l'input //
-searchBarContainer.addEventListener('mouseover', function () {
-    // Affiche l'icône X lors du survol //
-    document.getElementById('clear-input').style.display = 'inline-block';
-});
-
-// Ajout gestionnaire d'événements pour la sortie du survol du container de l'input //
-searchBarContainer.addEventListener('mouseout', function () {
-    // Cache l'icône X à la sortie du survol //
-    document.getElementById('clear-input').style.display = 'none';
+// Pour afficher l'icone Xmark de reset input //
+// Récupère l'élément input //
+const inputElement = document.getElementById('search-bar'); 
+// Ajout d'un gestionnaire d'événements pour le changement de l'input //
+inputElement.addEventListener('input', function () {
+    // Récupère le contenu de l'input //
+    let inputValue = inputElement.value.trim();
+    // Affiche ou cache l'icône X en fonction du contenu de l'input //
+    if (inputValue !== '') {
+        // Affiche l'icône X lorsque du texte est présent dans l'input //
+        document.getElementById('clear-input').style.display = 'inline-block';
+    } else {
+        // Cache l'icône X lorsque l'input est vide //
+        document.getElementById('clear-input').style.display = 'none';
+    }
 });
 
 // Pour vider le champs input et réafficher toutes les recettes //
 // Récupére l'élément avec l'ID 'clear-input' //
 const clearInput = document.getElementById('clear-input');
-
 // Récupére l'élément input //
 const searchBar = document.getElementById('search-bar');
-
 // Ajout gestionnaire d'événements pour le clic sur l'icône xmark //
 clearInput.addEventListener('click', function () {
     // Vide le contenu de l'input //
@@ -257,7 +256,7 @@ const listCollapseClick = (tag, sectionId, tagType) => {
         // Rechargement des listes initiales dans les collapses //
         filterDropdown(sectionId)
     }); 
-    
+
     const filterRecipesByTags = () => {
         // Sélection des tags //
         allSelectedTags = document.querySelectorAll('.txt-tag');
