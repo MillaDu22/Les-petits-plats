@@ -119,6 +119,51 @@ searchInput.addEventListener('input', function () {
     renderRecipes(filteredRecipes)
 });
 
+// Changement de loop au survol //
+// Récupére l'élément avec la classe 'black' //
+const blackLoop = document.querySelector('.black');
+
+// Ajout gestionnaire d'événements pour le survol //
+blackLoop.addEventListener('mouseover', function () {
+    // Change la source de l'image lors du survol //
+    blackLoop.src = "./assets/icons/yellowloop.png";
+});
+
+// Ajout gestionnaire d'événements pour la sortie du survol //
+blackLoop.addEventListener('mouseout', function () {
+    // Retour à loop noire lors de la sortie du survol //
+    blackLoop.src = "./assets/icons/Blackloop.png";
+});
+
+// Pour afficher l'icone Xmark de reset input //
+// Récupère l'élément input //
+const inputElement = document.getElementById('search-bar'); 
+// Ajout d'un gestionnaire d'événements pour le changement de l'input //
+inputElement.addEventListener('input', function () {
+    // Récupère le contenu de l'input //
+    let inputValue = inputElement.value.trim();
+    // Affiche ou cache l'icône X en fonction du contenu de l'input //
+    if (inputValue !== '') {
+        // Affiche l'icône X lorsque du texte est présent dans l'input //
+        document.getElementById('clear-input').style.display = 'inline-block';
+    } else {
+        // Cache l'icône X lorsque l'input est vide //
+        document.getElementById('clear-input').style.display = 'none';
+    }
+});
+
+// Pour vider le champs input et réafficher toutes les recettes //
+// Récupére l'élément avec l'ID 'clear-input' //
+const clearInput = document.getElementById('clear-input');
+// Récupére l'élément input //
+const searchBar = document.getElementById('search-bar');
+// Ajout gestionnaire d'événements pour le clic sur l'icône xmark //
+clearInput.addEventListener('click', function () {
+    // Vide le contenu de l'input //
+    searchBar.value = '';
+    renderRecipes(allRecipes);
+});
+
 // Chargement de toutes les recettes au démarrage //
 fetch(url)
 .then(response => response.json())
@@ -197,6 +242,13 @@ const getAllValues = (data, type) => {
 // Fonction pour gérer le clic sur un élément li de la liste de chaque collapse affichage des tags //
 // eslint-disable-next-line no-unused-vars
 const listCollapseClick = (tag, sectionId, tagType) => {
+    // Fonction pour réinitialiser le champ de recherche //
+    function resetSearchInput(sectionId) {
+        const inputField = document.getElementById(`search-drop-${sectionId}`);
+        if (inputField) {
+            inputField.value = '';
+        }
+    }
     const tagList = document.getElementById(`tag-list-${sectionId}`); // Met à jour le tagList interieur collapse //
     tagList.innerHTML = `${tag}<img src="./assets/icons/XCloseItem.png" class="x-selection" id="x-selection-${sectionId}" alt="Croix de fermeture selection" tabindex=0>`;
     tagList.style.display = 'flex'; // Affiche le tagList //
@@ -206,6 +258,10 @@ const listCollapseClick = (tag, sectionId, tagType) => {
     const xLi = document.getElementById(`x-selection-${sectionId}`);
     xLi.addEventListener('click', () => {    
         tagList.style.display ='none';
+        // Réinitialise la valeur de l'input à une chaîne vide //
+        resetSearchInput(sectionId);
+        // Rechargement des listes initiales dans les collapses //
+        filterDropdown(sectionId)
     }); 
     const filterRecipesByTags = () => {
         // Sélection des tags //
@@ -237,6 +293,7 @@ const listCollapseClick = (tag, sectionId, tagType) => {
 
 // Création des containers à tags //
 const TagContainer = document.getElementById('container-tag');
+const containerAllTags =document.querySelector('.container-tag-ingredients');
 
 const ulTagIngredients = document.createElement('div');
 ulTagIngredients.id = 'ulTagIngredients';
@@ -277,6 +334,7 @@ const addNewTxtTag = (tag, tagType) => {
     tagContainer.appendChild(newTxtTag);
     // Affiche le tag //
     tagContainer.style.display = 'flex';
+    containerAllTags.style.display ='flex'
     // Ajout gestionnaire d'événements pour le clic sur la croix de fermeture du tag hors du collapse //
     let xClose = newTxtTag.querySelector('.fa-xmark');
     xClose.addEventListener('click', () => {
